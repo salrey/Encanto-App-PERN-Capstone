@@ -15,7 +15,9 @@
 ### Capstone Planning
 - [EnCanto Ideation & Planning Document](https://docs.google.com/document/d/1UT9cdPcJCD3johIHFSwlupB_KwV4A83-P9DE4dAR770/edit?usp=sharing)
  
+### Back-End
 
+- To view deployed back-end/API, please click [here](https://encanto-backend.herokuapp.com)
 
 
 
