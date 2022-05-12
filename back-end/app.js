@@ -11,41 +11,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 // ROUTES
+app.use("/users", userController);
+
+
 app.get("/", (_, res) => {
-    res.send("Hello, world!");
+  res.status(200).send("Welcome to EnCanto!");
 });
 
-/////////////////////////////////////
-// REMOVE AFTER SUCCESSFUL DEPLOYMENT
-/////////////////////////////////////
-const db = require("./db/dbConfig.js");
-
-app.get("/test", async (_, res) => {
-  try {
-    const allDays = await db.any("SELECT * FROM test");
-    res.json(allDays);
-  } catch (err) {
-    res.json(err);
-  }
+app.get("*", (_, res) => {
+  res.status(404).send("This page has not been found");
 });
-
-/////////////////////////////////////
-// REMOVE AFTER SUCCESSFUL DEPLOYMENT
-/////////////////////////////////////
-
-
-// ROUTES
-// app.use("/apps", userController);
-
-
-// app.get("/", (_, res) => {
-//   res.status(200).send("Welcome to EnCanto!");
-// });
-
-// app.get("*", (_, res) => {
-//   res.status(404).send("This page has not been found");
-// });
 
 // EXPORT
 module.exports = app;
