@@ -1,4 +1,4 @@
-# Encanto-App-PERN-Capstone
+# EnCanto-App-PERN-Capstone
 
 ### Summary
 
@@ -8,14 +8,13 @@
 - [@SalRey](https://github.com/salrey)
 
 ### Collaborators
-- [@KiSubLee](https://github.com/kisublee)
-- [@EvaRodCor](https://github.com/EvaRodCor)
+- [@KiSubLee](https://github.com/kisublee) 
+- [@EvaRodCor](https://github.com/EvaRodCor) 
 
 
-## App Planning
-- https://docs.google.com/document/d/1UT9cdPcJCD3johIHFSwlupB_KwV4A83-P9DE4dAR770/edit?usp=sharing
-
-
+### Capstone Planning
+- [EnCanto Ideation & Planning Document](https://docs.google.com/document/d/1UT9cdPcJCD3johIHFSwlupB_KwV4A83-P9DE4dAR770/edit?usp=sharing)
+ 
 
 
 
