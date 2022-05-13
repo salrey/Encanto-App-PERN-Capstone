@@ -1,10 +1,10 @@
-INSERT INTO users (name, email) VALUES
-('Phoebe', "phoebe@gmail.com" ),
-('Monica', "monica@gmail.com" ),
-('Rachel', "rachel@gmail.com" ),
-('Emily', "emily@gmail.com" ),
-('Janice', "janice@gmail.com" ),
-('Ross', "ross@gmail.com" ),
-('Chandler', "chandler@gmail.com" ),
-('Joey', "joey@gmail.com" ),
-('Mike', "mike@gmail.com" ),
+INSERT INTO users (name, email, food_pref) VALUES
+('Phoebe', 'phoebe@gmail.com', 'vegan'),
+('Monica', 'monica@gmail.com', 'french'),
+('Rachel', 'rachel@gmail.com', 'japanese'),
+('Emily', 'emily@gmail.com', 'english'),
+('Janice', 'janice@gmail.com', 'caribbean'),
+('Ross', 'ross@gmail.com', 'american'),
+('Chandler', 'chandler@gmail.com', 'chinese'),
+('Joey', 'joey@gmail.com', 'italian'),
+('Mike', 'mike@gmail.com', 'american');
