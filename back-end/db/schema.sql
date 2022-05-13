@@ -3,9 +3,11 @@ CREATE DATABASE encanto_dev;
 
 \c encanto_dev;
 
-DROP TABLE IF EXISTS test;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE test (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY, 
-    name TEXT
+    name VARCHAR(20) NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    food_pref TEXT
 );
