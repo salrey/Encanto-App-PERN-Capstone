@@ -16,7 +16,6 @@ users.get('/', async (req, res) => {
     console.log("GET all filtered users / from users");
     try {
         const allFilteredUsers = await getAllUsers(req.query.food_pref);
-        console.log(req)
         allFilteredUsers ? 
         res.json({
             success: true,
