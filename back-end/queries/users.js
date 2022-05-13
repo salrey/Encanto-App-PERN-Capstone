@@ -31,8 +31,9 @@ const getOneUser = async (id) => {
 // Update one user
 const updateUser = async (id, user) => {
     const {name, email, food_pref} = user
+    console.log(user)
     try {
-        const updatedUser = await db.one("UPDATE users SET name=$2, email=$3, food_pref=$4 WHERE id=$1 RETURNING *", [id, name, email, food_pref]);
+        const updatedUser = await db.one("UPDATE users SET name=$2, email=$3, food_pref=$4 WHERE id=$1 RETURNING *", [id, name, email, food_pref, id]);
         return updatedUser
     }catch (error) {
         console.log("Error from updateUser query");
