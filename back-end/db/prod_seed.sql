@@ -1,8 +1,10 @@
-INSERT INTO test (name) VALUES
-('Monday'),
-('Tuesday'),
-('Wednesday'),
-('Thursday'),
-('Friday'),
-('Saturday'),
-('Sunday');
+INSERT INTO users (name, email) VALUES
+('Phoebe', "phoebe@gmail.com" ),
+('Monica', "monica@gmail.com" ),
+('Rachel', "rachel@gmail.com" ),
+('Emily', "emily@gmail.com" ),
+('Janice', "janice@gmail.com" ),
+('Ross', "ross@gmail.com" ),
+('Chandler', "chandler@gmail.com" ),
+('Joey', "joey@gmail.com" ),
+('Mike', "mike@gmail.com" ),
