@@ -21,7 +21,7 @@ const getOneUser = async (id) => {
     try{
         const oneUser = await db.one("SELECT * FROM users WHERE id=$1", id);
 
-        return oneUser
+        return oneUser;
     }catch (error) {
         console.log("Error from getOneUser query");
         return error;
@@ -30,11 +30,10 @@ const getOneUser = async (id) => {
 
 // Update one user
 const updateUser = async (id, user) => {
-    const {name, email, food_pref} = user
-    console.log(user)
+    const {name, email, food_pref} = user;
     try {
-        const updatedUser = await db.one("UPDATE users SET name=$2, email=$3, food_pref=$4 WHERE id=$1 RETURNING *", [id, name, email, food_pref, id]);
-        return updatedUser
+        const updatedUser = await db.one("UPDATE users SET name=$2, email=$3, food_pref=$4 WHERE id=$1 RETURNING *", [id, name, email, food_pref]);
+        return updatedUser;
     }catch (error) {
         console.log("Error from updateUser query");
         return error;
@@ -43,7 +42,7 @@ const updateUser = async (id, user) => {
 
 // Create one user
 const createUser = async (user) => {
-    const {name, email, food_pref} = user
+    const {name, email, food_pref} = user;
     try {
         const createdUser = await db.one("INSERT INTO users (name, email, food_pref) VALUES ($1, $2, $3) RETURNING *", [name, email, food_pref]);
         return createdUser;
