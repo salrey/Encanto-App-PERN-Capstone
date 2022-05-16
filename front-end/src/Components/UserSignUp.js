@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 const API = process.env.REACT_APP_API_URL;
 
-export default function UserSignUp () {
+export default function UserSignUp ({ callBackUser }) {
 
 let navigate = useNavigate();
 const [user, setUser] = useState({
@@ -19,16 +19,14 @@ const [user, setUser] = useState({
 
 const newUser = (addedUser) => {
     axios
-    .post(`${API}/users`, addedUser)
-    .then(
-        () => {
-        navigate(`/users`);
-        },
-        (error) => console.error(error)
-        )
-    .catch((err) => console.warn("catch", err));
+    .post(`${API}/users`, addedUser).then((response) => {
+        console.log(response.data.payload)
+        return setUser(response.data.payload)
+        })
+        .then(navigate(`/users`))
+        .catch((err) => console.warn("catch", err));
+    callBackUser(user)
 };
-
 
 
 const handleTextChange = (event) => {
