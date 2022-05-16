@@ -1,10 +1,14 @@
-import React from "react"
-import Users from "../Components/Users"
+import Users from "../Components/Users";
+import FoodForm from "../Components/FoodForm";
 
-export default function Index () {
-
-    return (
-        <Users />
-    )
-
+const Index = () => {
+  return (
+    <div>
+        <Users/>
+        <FoodForm/>
+    </div>
+  );
 }
+
+export default Index;
+

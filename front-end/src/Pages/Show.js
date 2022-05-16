@@ -1,11 +1,11 @@
-import React from "react"
+import UserDetails from "../Components/UserDetails";
 
-import MatchSearch from "../Components/MatchSearch"
-
-export default function Show () {
-
-    return (
-       <MatchSearch />
-    )
-
+const Show = () => {
+  return (
+    <div>
+        <UserDetails />
+    </div>
+  );
 }
+
+export default Show;
