@@ -15,7 +15,7 @@ const App = () => {
     <main>
       <Routes>
         <Route
-          path="/"
+          exact path="/"
           element={<Landing />}
          />
          <Route
