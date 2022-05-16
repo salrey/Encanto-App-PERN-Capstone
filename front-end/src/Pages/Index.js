@@ -1,11 +1,13 @@
+
+import React from "react"
 import Users from "../Components/Users";
-import FoodForm from "../Components/FoodForm";
+// import FoodForm from "../Components/FoodForm";
 
 const Index = () => {
   return (
     <div>
         <Users/>
-        <FoodForm/>
+        {/* <FoodForm/> */}
     </div>
   );
 }

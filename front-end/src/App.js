@@ -10,7 +10,8 @@ import Show from "./Pages/Show";
 import Redirect from "./Pages/Redirect";
 
 const App = () => {
-
+const [currentUser, setCurrentUser] = useState();
+console.log(`App Parent Console ${currentUser}`)
   return (
     <main>
       <Routes>
@@ -24,7 +25,7 @@ const App = () => {
          />
           <Route
           path="/signup"
-          element={<SignUp/>}
+          element={<SignUp callBackUser={setCurrentUser}/>}
          />
           <Route
           path="/users"
