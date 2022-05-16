@@ -7,7 +7,7 @@ import LogIn from "./Pages/LogIn";
 import SignUp from "./Pages/SignUp";
 import Index from "./Pages/Index";
 import Show from "./Pages/Show";
-
+import Redirect from "./Pages/Redirect";
 
 const App = () => {
 
@@ -27,12 +27,16 @@ const App = () => {
           element={<SignUp/>}
          />
           <Route
-          path="/index"
+          path="/users"
           element={<Index/>}
          />
          <Route
-          path="/show"
+          path="/users/:id"
           element={<Show/>}
+         />
+         <Route
+          path="*"
+          element={<Redirect />}
          />
       </Routes>
     </main>
