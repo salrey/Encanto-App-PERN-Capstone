@@ -37,7 +37,7 @@ console.log("the current user: ", currentUser)
          />
           <Route
           path="/users"
-          element={<Index/>}
+          element={<Index currentUser={currentUser}/>}
          />
          <Route
           path="/users/:id"

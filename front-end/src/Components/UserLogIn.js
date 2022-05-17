@@ -32,6 +32,7 @@ useEffect(() => {
     fetchData();
   }, []);
 
+  console.log(users)
 // Event handler to keep track of user's input
 const handleChange = (event) => {
     setInput({ ...input, [event.target.id]: event.target.value });
@@ -39,11 +40,14 @@ const handleChange = (event) => {
 
 // Event handler to check if the user's input is valid. If it is, log the user in successfully and take them to /user. If not, throw error message
 const handleLogIn = async (event) => {
+    
     event.preventDefault();
-    const find = users.find((user) => user.name === input.name && user.email === input.email);
+    
+    const find = users.find((user) => user.name === input.name.toLowerCase() && user.email === input.email.toLowerCase());
+    console.log("Find: ", find)
     if (find) {
         await setIsLoggedIn(true);
-        await setCurrentUser(input)
+        await setCurrentUser(find)
         navigate('/users');
     } else {
         setInput({name:"", email:""});
