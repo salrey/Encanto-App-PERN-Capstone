@@ -15,8 +15,6 @@ const [currentUser, setCurrentUser] = useState();
 // Once a user is logged in, change the state's value to true
 const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-console.log("from App.js: ", isLoggedIn)
-
   return (
     <main>
       <Routes>
@@ -26,7 +24,10 @@ console.log("from App.js: ", isLoggedIn)
          />
          <Route
           path="/login"
-          element={<LogIn setIsLoggedIn={setIsLoggedIn}/>}
+          element={<LogIn 
+            setIsLoggedIn={setIsLoggedIn}
+            setCurrentUser={setCurrentUser}
+            />}
          />
           <Route
           path="/signup"
