@@ -37,10 +37,10 @@ const newUser = (addedUser) => {
 };
 
 
-const handleTextChange = (event) => {
-    setUser({ ...user, [event.target.id]: event.target.value });
-};
 
+const handleTextChange = (event) => {
+setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
+};
 
 
 
