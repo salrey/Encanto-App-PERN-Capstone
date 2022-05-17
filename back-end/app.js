@@ -15,7 +15,6 @@ app.use(express.json());
 // ROUTES
 app.use("/users", userController);
 
-
 app.get("/", (_, res) => {
   res.status(200).send("Welcome to EnCanto!");
 });

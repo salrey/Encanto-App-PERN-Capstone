@@ -2,13 +2,20 @@
 const db = require("../db/dbConfig");
 
 
-//  ['japanese', 'american']
+// Select all users
+const getEveryUser = async () => {
+    try{
+        const users = await db.any("SELECT * FROM users");
+        return users;
+    }catch (error) {
+        console.log("Error from getEveryUser query ")
+    }
+}
 
 // Select all users that chose the same cuisine
 const getAllUsers = async (food_pref) => {
     try {
         const allUsers = await db.any("SELECT * FROM users WHERE food_pref=$1", food_pref.toLowerCase());
-
         return allUsers;
     }catch (error) {
         console.log("Error from getAllUsers query");
@@ -55,6 +62,7 @@ const createUser = async (user) => {
 
 // Export queries 
 module.exports = {
+    getEveryUser,
     getAllUsers,
     getOneUser,
     updateUser,
