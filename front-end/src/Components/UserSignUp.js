@@ -14,20 +14,35 @@ const [user, setUser] = useState({
     food_pref: null,
 });
 
+
+
 const newUser = (addedUser) => {
-    axios
-    .post(`${API}/users`, addedUser).then((response) => {
-        console.log(response.data.payload)
-        return setUser(response.data.payload)
-        })
-        .then(navigate(`/users`))
-        .catch((err) => console.warn("catch", err));
-    callBackUser(user)
+    const fetchData = async () => {
+        try {
+            const res = await axios.post(`${API}/users`, addedUser);
+            console.log(res.data.payload)
+            if(res.data.payload.constraint){
+                window.alert("That email address already exists")
+            } else {
+                setUser(res.data.payload)
+                callBackUser(res.data.payload)
+                navigate(`/users`)
+            }
+
+        } catch (error) {
+            console.warn("catch", error)
+        }
+    };
+    fetchData();
 };
 
+
+
 const handleTextChange = (event) => {
-    setUser({ ...user, [event.target.id]: event.target.value });
+setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
 };
+
+
 
 const handleSubmit = (event) => {
     event.preventDefault();
