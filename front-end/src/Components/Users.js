@@ -13,7 +13,6 @@ const Users = () => {
         .catch((error) => { throw error })
     }, [API]);
 
-
     return (
     <section>
         {users.map((user) => {

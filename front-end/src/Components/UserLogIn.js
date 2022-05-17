@@ -40,7 +40,7 @@ const handleChange = (event) => {
 // Event handler to check if the user's input is valid. If it is, log the user in successfully and take them to /user. If not, throw error message
 const handleLogIn = async (event) => {
     event.preventDefault();
-    const find = users.find((user) => user.name == input.name && user.email == input.email);
+    const find = users.find((user) => user.name === input.name && user.email === input.email);
     if (find) {
         await setIsLoggedIn(true);
         await setCurrentUser(input)
@@ -49,8 +49,6 @@ const handleLogIn = async (event) => {
         setInput({name:"", email:""});
         window.alert("Invalid name or email");
     }
-
-    
 };
 
     return (

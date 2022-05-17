@@ -15,6 +15,8 @@ const [currentUser, setCurrentUser] = useState();
 // Once a user is logged in, change the state's value to true
 const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+console.log("are you logged In?: ", isLoggedIn);
+console.log("the current user: ", currentUser)
   return (
     <main>
       <Routes>
