@@ -22,7 +22,6 @@ users.get('/login', async (_, res) => {
     }catch (err) {
         throw err;
     }
-
 })
 
 //Get all filtered users based on food preference -> (Done in queries)
