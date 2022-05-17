@@ -6,10 +6,24 @@ const {
     getAllUsers,
     getOneUser,
     updateUser,
-    createUser
+    createUser,
+    getEveryUser
 } = require("../queries/users");
 
+// Get all users for login 
+users.get('/login', async (_, res) => {
+    console.log("GET all users / from users");
+    try {
+        const everyUser = await getEveryUser();
+        res.status(200).json({
+            success: true,
+            payload: everyUser
+        })
+    }catch (err) {
+        throw err;
+    }
 
+})
 
 //Get all filtered users based on food preference -> (Done in queries)
 users.get('/', async (req, res) => {
@@ -29,8 +43,6 @@ users.get('/', async (req, res) => {
     }
 });
 
-
-
 //Get one user
 users.get('/:id', async (req, res) => {
     const { id } = req.params;
@@ -49,8 +61,6 @@ users.get('/:id', async (req, res) => {
         throw err
     }
 });
-
-
 
 //Update user
 users.put('/:id', async (req, res) => {

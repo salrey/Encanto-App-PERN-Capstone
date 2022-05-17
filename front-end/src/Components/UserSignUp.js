@@ -3,8 +3,6 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"
 
-
-
 const API = process.env.REACT_APP_API_URL;
 
 export default function UserSignUp ({ callBackUser }) {
@@ -15,7 +13,6 @@ const [user, setUser] = useState({
     email: "",
     food_pref: null,
 });
-
 
 const newUser = (addedUser) => {
     axios
@@ -28,19 +25,14 @@ const newUser = (addedUser) => {
     callBackUser(user)
 };
 
-
 const handleTextChange = (event) => {
     setUser({ ...user, [event.target.id]: event.target.value });
 };
-
-
 
 const handleSubmit = (event) => {
     event.preventDefault();
     newUser(user);
 };
-
-
 
     return (
         <div className="signup-container">

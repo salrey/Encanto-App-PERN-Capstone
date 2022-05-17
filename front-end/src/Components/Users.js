@@ -21,7 +21,6 @@ const Users = ({food_pref}) => {
         fetchData();
     }, [API, food_pref])
 
-
     return (
     <section>
         {food_pref && users.map((user) => {

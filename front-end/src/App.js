@@ -11,7 +11,12 @@ import Redirect from "./Pages/Redirect";
 
 const App = () => {
 const [currentUser, setCurrentUser] = useState();
-console.log(`App Parent Console ${currentUser}`)
+
+// Once a user is logged in, change the state's value to true
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+console.log("are you logged In?: ", isLoggedIn);
+console.log("the current user: ", currentUser)
   return (
     <main>
       <Routes>
@@ -21,7 +26,10 @@ console.log(`App Parent Console ${currentUser}`)
          />
          <Route
           path="/login"
-          element={<LogIn/>}
+          element={<LogIn 
+            setIsLoggedIn={setIsLoggedIn}
+            setCurrentUser={setCurrentUser}
+            />}
          />
           <Route
           path="/signup"
