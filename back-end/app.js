@@ -3,7 +3,7 @@ const cors = require("cors");
 const express = require("express");
 
 const userController = require("./controllers/userController")
-const logInContoller = require("./controllers/logInContoller")
+const logInContoller = require("./controllers/logInController")
 
 // CONFIGURATION
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 
 // ROUTES
 app.use("/users", userController);
-app.use("/login", logInContoller);
+app.use("/login", logInController);
 
 app.get("/", (_, res) => {
   res.status(200).send("Welcome to EnCanto!");
