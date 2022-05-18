@@ -3,7 +3,7 @@ const cors = require("cors");
 const express = require("express");
 
 const userController = require("./controllers/userController")
-const logInContoller = require("./controllers/logInController")
+const logInController = require("./controllers/logInController")
 
 // CONFIGURATION
 const app = express();
