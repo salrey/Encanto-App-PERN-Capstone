@@ -3,20 +3,28 @@ const express = require("express");
 
 const login = express.Router();
 
-const {getEveryUser} = require("../queries/users");
+const {getOneUserByEmail} = require("../queries/users");
 
-// Get all users for login 
-login.get('/', async (_, res) => {
-    console.log("GET all users / from users");
-    try {
-        const everyUser = await getEveryUser();
-        res.status(200).json({
+// Get a user for login by email
+login.get('/:email', async (req, res) => {
+    const { email } = req.params;
+    console.log("GET /:email from users");
+    try{
+        const oneUser = await getOneUserByEmail(email);
+        oneUser.result ? 
+        res.status(404).send({
+            success: false,
+            payload: `/User ${email} not found`
+        }) : res.json({
             success: true,
-            payload: everyUser
+            payload: oneUser
         })
-    }catch (err) {
-        throw err;
+    } catch (err) {
+        throw err
     }
-})
+});
+
+
+
 
 module.exports = login
