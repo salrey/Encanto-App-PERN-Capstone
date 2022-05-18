@@ -23,7 +23,7 @@ useEffect(() => {
     const fetchData = async () => {
       try {
         console.log("Hitting logIn page");
-        const res = await axios.get(`${API}/users/login`);
+        const res = await axios.get(`${API}/login`);
         setUsers(res.data.payload);
       } catch (err) {
         return err;
@@ -32,7 +32,6 @@ useEffect(() => {
     fetchData();
   }, []);
 
-  console.log(users)
 // Event handler to keep track of user's input
 const handleChange = (event) => {
     setInput({ ...input, [event.target.id]: event.target.value });
