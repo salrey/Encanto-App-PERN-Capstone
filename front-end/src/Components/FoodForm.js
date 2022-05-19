@@ -19,23 +19,33 @@ const FoodForm = ({callBackFood, currentUser}) => {
         callBackFood(user.food_pref)
     };
 
+    const preferences = [
+        "American",
+        "Mexican",
+        "Japanese",
+        "French",
+        "Korean",
+        "Chinese",
+        "Peruvian",
+        "Vegan",
+        "English",
+        "Italian",
+        "Caribbean"
+    ]
+
+    const dropdown = 
+        <select name="food_pref" id="food_pref" onChange={handleInputChange}> 
+            <option value="">---select---</option>
+            {preferences.map((cuisine) => 
+            user && user.food_pref === cuisine.toLowerCase() ? 
+                <option value={cuisine.toLowerCase()} selected>{cuisine}</option> : 
+                <option value={cuisine.toLowerCase()}>{cuisine}</option>)}
+        </select>
+
     return (
     <form onSubmit={handleEdit}>
-        <label htmlFor="food_pref"> Choose food preference:</label>        
-        <select name="food_pref" id="food_pref" onChange={handleInputChange}>
-            <option value="">---select---</option>
-            <option value="american">American</option>
-            <option value="mexican">Mexican</option>
-            <option value="japanese">Japanese</option>
-            <option value="french">French</option>
-            <option value="korean">Korean</option>
-            <option value="chinese">Chinese</option>
-            <option value="peruvian">Peruvian</option>
-            <option value="vegan">Vegan</option>
-            <option value="english">English</option>
-            <option value="italian">Italian</option>
-            <option value="caribbean">Caribbean</option>
-        </select>
+        <label htmlFor="food_pref"> Choose food preference:</label>  
+        {dropdown}      
         <button type="submit">Submit</button>
     </form>
     );
