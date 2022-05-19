@@ -8,6 +8,8 @@ import SignUp from "./Pages/SignUp";
 import Index from "./Pages/Index";
 import Show from "./Pages/Show";
 import Redirect from "./Pages/Redirect";
+import "./App.css"
+
 
 const App = () => {
 const [currentUser, setCurrentUser] = useState();
