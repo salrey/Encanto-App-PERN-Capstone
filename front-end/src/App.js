@@ -8,6 +8,8 @@ import SignUp from "./Pages/SignUp";
 import Index from "./Pages/Index";
 import Show from "./Pages/Show";
 import Redirect from "./Pages/Redirect";
+import "./App.css"
+
 
 const App = () => {
 const [currentUser, setCurrentUser] = useState();
@@ -33,7 +35,7 @@ console.log("the current user: ", currentUser)
          />
           <Route
           path="/signup"
-          element={<SignUp callBackUser={setCurrentUser}/>}
+          element={<SignUp />}
          />
           <Route
           path="/users"

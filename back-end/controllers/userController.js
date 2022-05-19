@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt")
 
 const users = express.Router();
 
@@ -69,11 +70,14 @@ users.put('/:id', async (req, res) => {
 
 
 //Create user
-users.post('/', async (req, res) => {
+users.post('/register', async (req, res) => {
     const { body } = req;
     console.log("Create new user");
     try {
-        const user = await createUser(body)
+        const hashedPassword = await bcrypt.hash(body.password, 10)
+        const user = await createUser(body, hashedPassword)
+        console.log("hashedPW: ", hashedPassword)
+        console.log("user: ", user)
         user ? res.json({ 
             success: true, 
             payload: user 

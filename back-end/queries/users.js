@@ -35,6 +35,17 @@ const getOneUser = async (id) => {
     }
 };
 
+// Get one user by email
+const getOneUserByEmail = async (email) => {
+    try{
+        const oneUser = await db.one("SELECT * FROM users WHERE email=$1", email);
+        return oneUser
+    }catch (error) {
+        console.log("Error from getOneUserByEmail query");
+        return error;
+    }
+};
+
 // Update one user
 const updateUser = async (id, user) => {
     const {name, email, food_pref} = user
@@ -49,10 +60,12 @@ const updateUser = async (id, user) => {
 };
 
 // Create one user
-const createUser = async (user) => {
+const createUser = async (user, hashedPassword) => {
     const {name, email, food_pref} = user
+    console.log("query: ", user)
+    console.log("query", hashedPassword)
     try {
-        const createdUser = await db.one("INSERT INTO users (name, email, food_pref) VALUES ($1, $2, $3) RETURNING *", [name, email, food_pref]);
+        const createdUser = await db.one("INSERT INTO users (name, email, food_pref, password) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, food_pref, hashedPassword]);
         return createdUser;
     }catch (error) {
         console.log("Error from createUser query");
@@ -65,6 +78,7 @@ module.exports = {
     getEveryUser,
     getAllUsers,
     getOneUser,
+    getOneUserByEmail,
     updateUser,
     createUser
 };

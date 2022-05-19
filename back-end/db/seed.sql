@@ -1,12 +1,12 @@
 \c encanto_dev;
 
-INSERT INTO users (name, email, food_pref) VALUES
-('phoebe', 'phoebe@gmail.com', 'vegan'),
-('monica', 'monica@gmail.com', 'french'),
-('rachel', 'rachel@gmail.com', 'japanese'),
-('emily', 'emily@gmail.com', 'english'),
-('janice', 'janice@gmail.com', 'caribbean'),
-('ross', 'ross@gmail.com', 'american'),
-('chandler', 'chandler@gmail.com', 'chinese'),
-('joey', 'joey@gmail.com', 'italian'),
-('mike', 'mike@gmail.com', 'american');
+INSERT INTO users (name, email, food_pref, password) VALUES
+('phoebe', 'phoebe@gmail.com', 'vegan', '123'),
+('monica', 'monica@gmail.com', 'french', '123'),
+('rachel', 'rachel@gmail.com', 'japanese', '123'),
+('emily', 'emily@gmail.com', 'english', '123'),
+('janice', 'janice@gmail.com', 'caribbean', '123'),
+('ross', 'ross@gmail.com', 'american', '123'),
+('chandler', 'chandler@gmail.com', 'chinese', '123'),
+('joey', 'joey@gmail.com', 'italian', '123'),
+('mike', 'mike@gmail.com', 'american', '123');
