@@ -18,7 +18,7 @@ const navigate = useNavigate();
 
 // Event handler to keep track of user's input
 const handleChange = (event) => {
-    setInput({ ...input, [event.target.id]: event.target.value });
+    setInput({ ...input, [event.target.id]: event.target.value.toLowerCase()});
 };
 
 // Event handler to check if the user's input is valid. If it is, log the user in successfully and take them to /user. If not, throw error message
@@ -29,10 +29,10 @@ const handleSubmit = async (event) => {
     const fetchData = async () => {
         try {
           console.log("Hitting logIn page");
-          const res = await axios.post(`${API}/login`, input)
-          setCurrentUser(res.data)
-          setIsLoggedIn(true)
-          navigate('/users')
+          const res = await axios.post(`${API}/login`, input);
+          setCurrentUser(res.data);
+          setIsLoggedIn(true);
+          navigate('/users');
           
         } catch (err) {
           return err;
