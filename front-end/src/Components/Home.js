@@ -17,6 +17,8 @@ import 'swiper/modules/effect-fade/effect-fade.min.css';
 import 'swiper/modules/navigation/navigation.min.css';
 import 'swiper/modules/pagination/pagination.min.css';
 import { EffectFade, Pagination } from 'swiper';
+import '../Styles/Home.css';
+
 
 
 export default function Home() {
