@@ -3,7 +3,21 @@ const express = require("express");
 
 const login = express.Router();
 
-const {getOneUserByEmail} = require("../queries/users");
+const {getOneUserByEmail, getEveryUser} = require("../queries/users");
+
+
+login.get('/', async (req, res) => {
+    try {
+        const allUsers = await getEveryUser();
+
+        res.json({
+            success: true,
+            payload: allUsers
+        }) 
+    }catch (err){
+        throw err
+    }
+});
 
 // Get a user for login by email
 login.get('/:email', async (req, res) => {

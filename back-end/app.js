@@ -1,6 +1,7 @@
 // DEPENDENCIES
 const cors = require("cors");
 const express = require("express");
+const bcrypt = require("bcrypt")
 
 const userController = require("./controllers/userController")
 const logInController = require("./controllers/logInController")
@@ -11,6 +12,7 @@ const app = express();
 // MIDDLEWARE
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended: false}))
 
 // ROUTES
 app.use("/users", userController);

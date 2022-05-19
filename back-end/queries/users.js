@@ -60,10 +60,12 @@ const updateUser = async (id, user) => {
 };
 
 // Create one user
-const createUser = async (user) => {
+const createUser = async (user, hashedPassword) => {
     const {name, email, food_pref} = user
+    console.log("query: ", user)
+    console.log("query", hashedPassword)
     try {
-        const createdUser = await db.one("INSERT INTO users (name, email, food_pref) VALUES ($1, $2, $3) RETURNING *", [name, email, food_pref]);
+        const createdUser = await db.one("INSERT INTO users (name, email, food_pref, password) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, food_pref, hashedPassword]);
         return createdUser;
     }catch (error) {
         console.log("Error from createUser query");
