@@ -29,11 +29,11 @@ const handleSubmit = async (event) => {
         try {
           console.log("Hitting logIn page");
           const res = await axios.post(`${API}/login`, input)
-              console.log("test", res.data)
-              setCurrentUser(res.data.payload)
-              setIsLoggedIn(true)
-              navigate('/users')
-        
+            // const res = await axios.get(`${API}/login/${input.email}`)
+          console.log("test", res.data)
+          setCurrentUser(res.data.payload)
+          setIsLoggedIn(true)
+          navigate('/users')
             console.log("input: ", input)
         } catch (err) {
           return err;
