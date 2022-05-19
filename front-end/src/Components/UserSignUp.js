@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -9,24 +9,23 @@ export default function UserSignUp ({ callBackUser }) {
 
 let navigate = useNavigate();
 const [user, setUser] = useState({
-    name: "",
+    password: "",
     email: "",
     food_pref: null,
+    name: "",
 });
-
-
 
 const newUser = (addedUser) => {
     const fetchData = async () => {
         try {
-            const res = await axios.post(`${API}/users`, addedUser);
+            const res = await axios.post(`${API}/users/register`, addedUser);
             console.log(res.data.payload)
             if(res.data.payload.constraint){
                 window.alert("That email address already exists")
             } else {
                 setUser(res.data.payload)
-                callBackUser(res.data.payload)
-                navigate(`/users`)
+                // callBackUser(res.data.payload)
+                navigate(`/login`)
             }
 
         } catch (error) {
@@ -36,13 +35,9 @@ const newUser = (addedUser) => {
     fetchData();
 };
 
-
-
 const handleTextChange = (event) => {
 setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
 };
-
-
 
 const handleSubmit = (event) => {
     event.preventDefault();
@@ -61,6 +56,18 @@ const handleSubmit = (event) => {
                         type="text"
                         onChange={handleTextChange}
                         placeholder="Name"
+                        required
+                    />
+        <br></br>
+                <label className="new-user-password" htmlFor="password">Password</label>
+                <br></br>
+                    <input
+                        className="password-input"
+                        id="password"
+                        value={user.password}
+                        type="text"
+                        onChange={handleTextChange}
+                        placeholder="Password"
                         required
                     />
         <br></br>
