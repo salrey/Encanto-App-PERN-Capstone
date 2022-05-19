@@ -10,7 +10,7 @@ const Index = ({currentUser}) => {
 
   return (
     <div>
-        <Users food_pref={currentFoodPref}/>
+        <Users food_pref={currentFoodPref} currentUser={currentUser}/>
         <FoodForm callBackFood={setFoodPref} currentUser={currentUser}/>
     </div>
   );
