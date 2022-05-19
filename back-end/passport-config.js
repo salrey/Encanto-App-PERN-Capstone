@@ -9,8 +9,10 @@ function initialize (passport) {
 
     const authenticateUser = async (email, password, done) => {
         const user = await getOneUserByEmail(email)
+        console.log("What email?: ", email)
         console.log("user from passport: ", user)
-        if (!user) {
+        console.log("passport: ", passport)
+        if (user === null) {
             return done(null, false, {message: "No user with that email"})
         }
 
