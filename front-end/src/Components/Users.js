@@ -3,17 +3,17 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Users = ({food_pref}) => {
+const Users = ({food_pref, currentUser}) => {
     const [users, setUsers] = useState();
     const API = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
-        console.log("food pref", food_pref)
+        // console.log("food pref", food_pref)
         const fetchData = async () => {
             try {
                 const res = await axios.get(`${API}/users?food_pref=${food_pref}`);
-                console.log(res.data)
-                setUsers(res.data.payload)
+                // console.log("response data", res.data)
+                setUsers(res.data.payload.filter((user) => user.email !== currentUser.email))
             } catch (err) {
                 return err
             }
@@ -21,11 +21,13 @@ const Users = ({food_pref}) => {
         fetchData();
     }, [API, food_pref])
 
+    const display = food_pref && users.length ? users.map((user) => {
+        return <Link to={"/users/"+user.id} key={user.id}>{user.name}</Link>
+    }) : "No users found at this time, try again later or choose another preference"
+
     return (
     <section>
-        {food_pref && users.map((user) => {
-            return <Link to={"/users/"+user.id} key={user.id}>{user.name}</Link>
-        })}
+        {food_pref && display}
     </section>
     );
 }
