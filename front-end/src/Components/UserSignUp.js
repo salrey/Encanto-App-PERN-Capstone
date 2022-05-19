@@ -16,18 +16,27 @@ const [user, setUser] = useState({
 });
 
 const newUser = (addedUser) => {
-    axios
-    .post(`${API}/users/register`, addedUser).then((response) => {
-        console.log(response.data.payload)
-        return setUser(response.data.payload)
-        })
-        .then(navigate(`/login`))
-        .catch((err) => console.warn("catch", err));
-    callBackUser(user)
+    const fetchData = async () => {
+        try {
+            const res = await axios.post(`${API}/register`, addedUser);
+            console.log(res.data.payload)
+            if(res.data.payload.constraint){
+                window.alert("That email address already exists")
+            } else {
+                setUser(res.data.payload)
+                callBackUser(res.data.payload)
+                navigate(`/login`)
+            }
+
+        } catch (error) {
+            console.warn("catch", error)
+        }
+    };
+    fetchData();
 };
 
 const handleTextChange = (event) => {
-    setUser({ ...user, [event.target.id]: event.target.value });
+setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
 };
 
 const handleSubmit = (event) => {
