@@ -10,14 +10,17 @@ function initialize (passport) {
     const authenticateUser = async (email, password, done) => {
         const user = await getOneUserByEmail(email)
         console.log("What email?: ", email)
+        console.log("What is pw ", password)
+        console.log("What is done ", done)
         console.log("user from passport: ", user)
-        console.log("passport: ", passport)
-        if (user === null) {
+
+        if (!user) {
             return done(null, false, {message: "No user with that email"})
         }
 
         try {
             if (await bcrypt.compare(password, user.password)) {
+                console.log("hitting bcrypt?: ", user)
                 return done(null, user)
             } else {
                 return done(null, false, {message: "Incorrect Password"})

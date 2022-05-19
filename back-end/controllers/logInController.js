@@ -7,12 +7,7 @@ const {getOneUserByEmail, getEveryUser, getOneUser} = require("../queries/users"
 
 const login = express.Router();
 const initializePassport = require('../passport-config');
-initializePassport(
-    passport,
-    getOneUserByEmail,
-    getOneUser,
-    
-)
+initializePassport(passport)
 
 // MIDDLEWARE
 login.use(flash())
@@ -60,26 +55,25 @@ login.post('/', passport.authenticate('local', {
     successRedirect: '/users',
     failureRedirect: '/login',
     failureFlash: true
-}))
+})
+)
 
-// users.post('/register', async (req, res) => {
-//     const { body } = req;
-//     console.log("Create new user");
-//     try {
-//         const hashedPassword = await bcrypt.hash(body.password, 10)
-//         const user = await createUser(body, hashedPassword)
-//         console.log("hashedPW: ", hashedPassword)
-//         console.log("user: ", user)
-//         user ? res.json({ 
-//             success: true, 
-//             payload: user 
-//         }) : res.status(404).send({
-//             success: false,
-//             payload: "/user not found" });
-//     } catch(err) {
-//         throw err
-//     }
-// });
+function checkAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+
+    res.redirect('/login')
+}
+
+function checkNotAuthenticated (req, res, next) {
+    if (req.isAuthenticated()) {
+      return   res.redirect('/users')
+    }
+    next()
+}
+
+
 
 
 module.exports = login
