@@ -20,6 +20,7 @@ import { EffectFade, Pagination } from 'swiper';
 import '../Styles/Home.css';
 
 
+
 export default function Home() {
 
     return (
