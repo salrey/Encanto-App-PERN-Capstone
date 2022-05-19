@@ -5,12 +5,9 @@ import axios from "axios";
 const FoodForm = ({callBackFood, currentUser}) => {
     const API = process.env.REACT_APP_API_URL;
     
-    //TESTING: PLACEHOLDER INFO
     const [ user, setUser ] = useState(currentUser);
 
-    console.log("foodform: ", user)
-    //MISSING INFO
-    //Get current users payload based on login/sign up information and then set the user state in order to edit that
+    // console.log("foodform: ", user)
 
     const handleInputChange = (event) => {
         setUser({ ...user, [event.target.id]: event.target.value});
@@ -29,8 +26,14 @@ const FoodForm = ({callBackFood, currentUser}) => {
             <option value="american">American</option>
             <option value="mexican">Mexican</option>
             <option value="japanese">Japanese</option>
-            <option value="peruvian">Peruvian</option>
+            <option value="french">French</option>
             <option value="korean">Korean</option>
+            <option value="chinese">Chinese</option>
+            <option value="peruvian">Peruvian</option>
+            <option value="vegan">Vegan</option>
+            <option value="english">English</option>
+            <option value="italian">Italian</option>
+            <option value="caribbean">Caribbean</option>
         </select>
         <button type="submit">Submit</button>
     </form>
