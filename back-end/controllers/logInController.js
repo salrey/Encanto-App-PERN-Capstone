@@ -1,12 +1,30 @@
-
+// DEPENDENCIES
 const express = require("express");
+const passport = require("passport")
+const flash = require("express-flash")
+const session = require("express-session")
+const {getOneUserByEmail, getEveryUser, getOneUser} = require("../queries/users");
 
 const login = express.Router();
+const initializePassport = require('../passport-config');
+initializePassport(
+    passport,
+    getOneUserByEmail,
+    getOneUser,
+    
+)
 
-const {getOneUserByEmail, getEveryUser} = require("../queries/users");
+// MIDDLEWARE
+login.use(flash())
+login.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+login.use(passport.initialize())
+login.use(passport.session())
 
-
-login.get('/', async (req, res) => {
+login.get('/test', async (req, res) => {
     try {
         const allUsers = await getEveryUser();
 
@@ -38,7 +56,30 @@ login.get('/:email', async (req, res) => {
     }
 });
 
+login.post('/', passport.authenticate('local', {
+    successRedirect: '/users',
+    failureRedirect: '/login',
+    failureFlash: true
+}))
 
+// users.post('/register', async (req, res) => {
+//     const { body } = req;
+//     console.log("Create new user");
+//     try {
+//         const hashedPassword = await bcrypt.hash(body.password, 10)
+//         const user = await createUser(body, hashedPassword)
+//         console.log("hashedPW: ", hashedPassword)
+//         console.log("user: ", user)
+//         user ? res.json({ 
+//             success: true, 
+//             payload: user 
+//         }) : res.status(404).send({
+//             success: false,
+//             payload: "/user not found" });
+//     } catch(err) {
+//         throw err
+//     }
+// });
 
 
 module.exports = login
