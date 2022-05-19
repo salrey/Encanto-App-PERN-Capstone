@@ -23,6 +23,7 @@ const FoodForm = ({callBackFood, currentUser}) => {
     <form onSubmit={handleEdit}>
         <label htmlFor="food_pref"> Choose food preference:</label>        
         <select name="food_pref" id="food_pref" onChange={handleInputChange}>
+            <option value="">---select---</option>
             <option value="american">American</option>
             <option value="mexican">Mexican</option>
             <option value="japanese">Japanese</option>
