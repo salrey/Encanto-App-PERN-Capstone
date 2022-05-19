@@ -1,12 +1,12 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react"
+import React, { useState} from "react"
 import {useNavigate } from "react-router-dom"
 
 export default function UserLogIn ({setIsLoggedIn, setCurrentUser}) {
 
 // Set a state for log in
 const [input, setInput] = useState({
-    name:"",
+    password:"",
     email:""
 })
 
@@ -54,11 +54,11 @@ const handleSubmit = async (event) => {
                     required
                     />
                      <input
-                    id="name"
-                    value={input.name}
+                    id="password"
+                    value={input.password}
                     type="text"
                     onChange={handleChange}
-                    placeholder="name"
+                    placeholder="password"
                     required
                     />
                     <button>Log In</button>

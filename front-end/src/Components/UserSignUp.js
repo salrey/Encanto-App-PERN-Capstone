@@ -9,18 +9,19 @@ export default function UserSignUp ({ callBackUser }) {
 
 let navigate = useNavigate();
 const [user, setUser] = useState({
-    name: "",
+    password: "",
     email: "",
     food_pref: null,
+    name: "",
 });
 
 const newUser = (addedUser) => {
     axios
-    .post(`${API}/users`, addedUser).then((response) => {
+    .post(`${API}/users/register`, addedUser).then((response) => {
         console.log(response.data.payload)
         return setUser(response.data.payload)
         })
-        .then(navigate(`/users`))
+        .then(navigate(`/login`))
         .catch((err) => console.warn("catch", err));
     callBackUser(user)
 };
@@ -46,6 +47,18 @@ const handleSubmit = (event) => {
                         type="text"
                         onChange={handleTextChange}
                         placeholder="Name"
+                        required
+                    />
+        <br></br>
+                <label className="new-user-password" htmlFor="password">Password</label>
+                <br></br>
+                    <input
+                        className="password-input"
+                        id="password"
+                        value={user.password}
+                        type="text"
+                        onChange={handleTextChange}
+                        placeholder="Password"
                         required
                     />
         <br></br>
