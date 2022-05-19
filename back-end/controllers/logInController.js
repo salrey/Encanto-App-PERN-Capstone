@@ -52,28 +52,34 @@ login.get('/:email', async (req, res) => {
 });
 
 login.post('/', passport.authenticate('local', {
-    successRedirect: '/users',
-    failureRedirect: '/login',
+    // successRedirect: '/users',
+    // failureRedirect: '/login',
     failureFlash: true
-})
+}), function(req, res) {
+    res.json(req.user);
+ }
 )
 
 function checkAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-
     res.redirect('/login')
 }
 
 function checkNotAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {
-      return   res.redirect('/users')
+      return  res.redirect('/users')
     }
     next()
 }
 
-
-
+function isLoggedIn(request, response, done) {
+    if (request.user) {
+       return done();
+    }
+    
+    return res.redirect("/login");
+ };
 
 module.exports = login
