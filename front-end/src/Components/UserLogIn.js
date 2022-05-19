@@ -25,16 +25,19 @@ const handleChange = (event) => {
 const handleSubmit = async (event) => {
     
     event.preventDefault();
+
     const fetchData = async () => {
         try {
           console.log("Hitting logIn page");
+          console.log("input", input)
           const res = await axios.post(`${API}/login`, input)
-            // const res = await axios.get(`${API}/login/${input.email}`)
-          console.log("test", res.data)
-          setCurrentUser(res.data.payload)
-          setIsLoggedIn(true)
-          navigate('/users')
-            console.log("input: ", input)
+          if (res) {
+            const user = await axios.get(`${API}/login/${input.email}`)
+            setCurrentUser(user.data.payload)
+            setIsLoggedIn(true)
+            navigate('/users')
+          }
+
         } catch (err) {
           return err;
         }

@@ -24,7 +24,7 @@ const newUser = (addedUser) => {
                 window.alert("That email address already exists")
             } else {
                 setUser(res.data.payload)
-                callBackUser(res.data.payload)
+                // callBackUser(res.data.payload)
                 navigate(`/login`)
             }
 
