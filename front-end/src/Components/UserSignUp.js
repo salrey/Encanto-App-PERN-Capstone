@@ -18,7 +18,7 @@ const [user, setUser] = useState({
 const newUser = (addedUser) => {
     const fetchData = async () => {
         try {
-            const res = await axios.post(`${API}/register`, addedUser);
+            const res = await axios.post(`${API}/users/register`, addedUser);
             console.log(res.data.payload)
             if(res.data.payload.constraint){
                 window.alert("That email address already exists")
