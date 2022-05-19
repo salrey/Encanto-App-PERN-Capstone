@@ -11,6 +11,7 @@ const app = express();
 // MIDDLEWARE
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended: false}))
 
 // ROUTES
 app.use("/users", userController);

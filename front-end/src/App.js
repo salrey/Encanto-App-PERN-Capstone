@@ -33,7 +33,7 @@ console.log("the current user: ", currentUser)
          />
           <Route
           path="/signup"
-          element={<SignUp callBackUser={setCurrentUser}/>}
+          element={<SignUp />}
          />
           <Route
           path="/users"
