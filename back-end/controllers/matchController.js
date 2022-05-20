@@ -4,6 +4,7 @@ const match = express.Router();
 
 const {
     requestMatch,
+    receiveMatches
 } = require('../queries/matches');
 
 match.post('/', async (req, res) => {
@@ -20,9 +21,17 @@ match.post('/', async (req, res) => {
 
 
 
-
-
-
+match.get('/', async (req, res) => {
+    console.log("GET all matches from our matches table")
+    const getAllMatches = await receiveMatches();
+    getAllMatches ? 
+    res.json({ 
+        success: true,
+            payload: getAllMatches}) : 
+    res.status(404).send({ 
+        success: false,
+            payload: "/page not found/"});
+});
 
 
 
