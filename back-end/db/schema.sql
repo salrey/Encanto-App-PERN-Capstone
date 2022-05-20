@@ -17,7 +17,7 @@ CREATE TABLE match_requests (
     id SERIAL PRIMARY KEY, 
     request_from INTEGER REFERENCES users (id),
     request_to INTEGER REFERENCES users (id),
-    request_status INTEGER,
+    request_status INTEGER DEFAULT 0,
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    date_accepted TIMESTAMP
+    date_accepted TIMESTAMP DEFAULT NULL
 )
