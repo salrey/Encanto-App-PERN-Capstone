@@ -39,19 +39,19 @@ const deleteMatch = async (match_id) => {
 };
 
 // For PUT
+const updateMatchStatus = async (match, match_id) => {
 
-// Update an existing artist post
-const updateMatchStatus = async (match_id, match) => {
-    const {request_status} = match
+    const {request_from, request_to, request_status, date_created, date_accepted} = match;
   try{
+    console.log("Hitting from updateMatchStatus query ");
+    console.log("Match is: ", match);
+    console.log("match_id is: ", match_id);
 
-    const editedArtist = await db.one("UPDATE match_requests SET request_status=$1 WHERE id=$2 RETURNING *", [request_status, match_id])
-
-
-    return editedArtist;
+    const updateMatchStatus = await db.one("UPDATE match_requests SET request_from=$1, request_to=$2, request_status=$3, date_created=$4, date_accepted=$5 WHERE id=$6 RETURNING *", [request_from, request_to, request_status, date_created, date_accepted, match_id]);
+    return updateMatchStatus;
     
   }catch(err) {
-    return err;
+    console.log("Error from updateMatchStatus query ");
   }
 }
 
@@ -82,7 +82,8 @@ const updateMatchStatus = async (match_id, match) => {
 module.exports = {
    requestMatch,
    receiveMatch,
-   deleteMatch
+   deleteMatch,
+   updateMatchStatus
 };
 
 
