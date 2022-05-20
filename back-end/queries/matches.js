@@ -4,7 +4,6 @@ const db = require("../db/dbConfig");
 // /request_from, request_to, request_status,
 
 // For POST
-// INSERT INTO match_requests (request_from, request_to, request_status, date_created, date_accepted) VALUES (1, 2, 0, '2022-06-12 15:00:00', '2022-06-12 16:00:00');
 const requestMatch = async (current_user_id, match_user_id) => {
 
     try {
@@ -15,8 +14,18 @@ const requestMatch = async (current_user_id, match_user_id) => {
     } catch (error) {
         console.log("Error from sendMatchRequest query ");
     }
-}
+};
 
+// For GET
+const receiveMatches = async () => {
+
+    try{
+        const getAllMatches = await db.any("SELECT * FROM match_requests");
+        return getAllMatches;
+    } catch (error) {
+        console.log("Error from receiveMatches query ");
+    }
+}
 
 
 // // Select all users
@@ -28,7 +37,6 @@ const requestMatch = async (current_user_id, match_user_id) => {
 //         console.log("Error from getEveryUser query ")
 //     }
 // }
-
 
 // // Get one user
 // const getOneUser = async (id) => {
@@ -45,7 +53,8 @@ const requestMatch = async (current_user_id, match_user_id) => {
 
 // Export queries 
 module.exports = {
-   requestMatch
+   requestMatch,
+   receiveMatches,
 };
 
 
