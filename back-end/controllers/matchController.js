@@ -5,7 +5,8 @@ const match = express.Router();
 const {
     requestMatch,
     receiveMatch,
-    deleteMatch
+    deleteMatch,
+    updateMatchStatus
 } = require('../queries/matches');
 
 match.post('/', async (req, res) => {
@@ -48,5 +49,23 @@ match.delete("/", async (req, res) => {
         success: false,
         payload: "/page not found/"});
 })
+
+
+match.put("/", async (req, res) => {
+    console.log("UPDATED a match with yes or no")
+    const { match, match_id } = req.body;
+    const updatedMatch = await updateMatchStatus(match, match_id);
+    console.log("Updated Match", updatedMatch)
+    updatedMatch ? 
+    res.json({ 
+        success: true, 
+        payload: updatedMatch}) :
+        res.status(404).send({
+        success: false,
+        payload: "/page not found/" });
+    });
+
+
+
 
 module.exports = match;
