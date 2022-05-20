@@ -30,7 +30,8 @@ const receiveMatch = async (request_to, request_from) => {
 const deleteMatch = async (match_id) => {
     try{
         console.log("Hitting deleteMatch query ");
-        const deletedMatch = await db.one("DELETE * FROM match_request WHERE id=$1 RETURNING *", match_id);
+        console.log("Match id", match_id);
+        const deletedMatch = await db.one("DELETE FROM match_requests WHERE id=$1 RETURNING *", match_id);
         return deletedMatch;
     } catch (error) {
         console.log("Error from deleteMatch query ");
