@@ -7,14 +7,14 @@ const db = require("../db/dbConfig");
 // INSERT INTO match_requests (request_from, request_to, request_status, date_created, date_accepted) VALUES (1, 2, 0, '2022-06-12 15:00:00', '2022-06-12 16:00:00');
 const requestMatch = async (current_user_id, match_user_id) => {
 
-    try{
+    try {
         console.log("Hitting requestMatch query")
+        console.log("current-user", current_user_id, "match-user", match_user_id);
         const sendMatchRequest = await db.one("INSERT INTO match_requests (request_from, request_to) VALUES ($1, $2) RETURNING *", [current_user_id, match_user_id]);
         return sendMatchRequest;
-    }catch (error) {
-        console.log("Error from requestMatch query ");
+    } catch (error) {
+        console.log("Error from sendMatchRequest query ");
     }
-
 }
 
 

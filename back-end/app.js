@@ -2,8 +2,11 @@
 const cors = require("cors");
 const express = require("express");
 
-const userController = require("./controllers/userController")
-const logInController = require("./controllers/logInController")
+const userController = require("./controllers/userController");
+const logInController = require("./controllers/logInController");
+const matchController = require("./controllers/matchController");
+
+// match-requests
 
 // CONFIGURATION
 const app = express();
@@ -16,6 +19,7 @@ app.use(express.urlencoded({extended: false}))
 // ROUTES
 app.use("/users", userController);
 app.use("/login", logInController);
+app.use("/match-requests", matchController);
 
 app.get("/", (_, res) => {
   res.status(200).send("Welcome to EnCanto!");
