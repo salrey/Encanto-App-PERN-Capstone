@@ -30,11 +30,28 @@ const receiveMatch = async (request_to, request_from) => {
 const deleteMatch = async (match_id) => {
     try{
         console.log("Hitting deleteMatch query ");
-        const deletedMatch = await db.one("DELETE * FROM match_request WHERE id=$1 RETURNING *", match_id);
+        const deletedMatch = await db.one("DELETE FROM match_requests WHERE id=$1 RETURNING *", match_id);
         return deletedMatch;
     } catch (error) {
         console.log("Error from deleteMatch query ");
     }
+};
+
+// For PUT
+
+// Update an existing artist post
+const updateMatchStatus = async (match_id, match) => {
+    const {request_status} = match
+  try{
+
+    const editedArtist = await db.one("UPDATE match_requests SET request_status=$1 WHERE id=$2 RETURNING *", [request_status, match_id])
+
+
+    return editedArtist;
+    
+  }catch(err) {
+    return err;
+  }
 }
 
 // // Select all users
