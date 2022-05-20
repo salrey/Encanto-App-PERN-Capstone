@@ -16,7 +16,7 @@ match.post('/', async (req, res) => {
     res.status(404).send({
         success: false,
             payload: "/this match is not found/" });
-    });
+});
 
 
 
