@@ -12,3 +12,5 @@ INSERT INTO users (name, email, food_pref, password) VALUES
 ('mike', 'mike@gmail.com', 'american', '123');
 
 INSERT INTO match_requests (request_from, request_to, request_status, date_created, date_accepted) VALUES (1, 2, 0, '2022-06-12 15:00:00', '2022-06-12 16:00:00');
+
+-- INSERT INTO match_requests (request_from, request_to) VALUES (10, 11);
