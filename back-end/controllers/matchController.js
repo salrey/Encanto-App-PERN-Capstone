@@ -4,7 +4,8 @@ const match = express.Router();
 
 const {
     requestMatch,
-    receiveMatch
+    receiveMatch,
+    deleteMatch
 } = require('../queries/matches');
 
 match.post('/', async (req, res) => {
@@ -34,6 +35,18 @@ match.get('/', async (req, res) => {
 });
 
 
-
+match.delete("/", async (req, res) => {
+    console.log("DELETE a match from our matches table")
+    const { id } = req.body;
+    const deletedMatch = await deleteMatch(id);
+    console.log("DeletedMatch", deletedMatch)
+    deletedMatch ?
+    res.json({ 
+        success: true,
+        payload: deletedMatch}) : 
+    res.status(404).send({ 
+        success: false,
+        payload: "/page not found/"});
+})
 
 module.exports = match;
