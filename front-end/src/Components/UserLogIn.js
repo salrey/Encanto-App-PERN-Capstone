@@ -35,7 +35,7 @@ const handleSubmit = async (event) => {
           navigate('/users');
           
         } catch (err) {
-          return err;
+          return window.alert("Invalid password or email address")
         }
       };
       fetchData();
