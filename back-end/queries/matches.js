@@ -17,16 +17,25 @@ const requestMatch = async (current_user_id, match_user_id) => {
 };
 
 // For GET
-const receiveMatches = async () => {
-
+const receiveMatch = async (request_to, request_from) => {
     try{
-        const getAllMatches = await db.any("SELECT * FROM match_requests");
-        return getAllMatches;
+        console.log("Hitting receiveMatch query ");
+        const getMatch = await db.one("SELECT * FROM match_requests WHERE request_to=$1 AND request_from=$2", [request_to, request_from]);
+        return getMatch;
     } catch (error) {
-        console.log("Error from receiveMatches query ");
+        console.log("Error from receiveMatch query ");
     }
 }
-
+// For DELETE
+const deleteMatch = async (match_id) => {
+    try{
+        console.log("Hitting deleteMatch query ");
+        const deletedMatch = await db.one("DELETE * FROM match_request WHERE id=$1 RETURNING *", match_id);
+        return deletedMatch;
+    } catch (error) {
+        console.log("Error from deleteMatch query ");
+    }
+}
 
 // // Select all users
 // const getMatch = async (request_from_id, request_to_id, request_status) => {
@@ -54,7 +63,8 @@ const receiveMatches = async () => {
 // Export queries 
 module.exports = {
    requestMatch,
-   receiveMatches,
+   receiveMatch,
+   deleteMatch
 };
 
 

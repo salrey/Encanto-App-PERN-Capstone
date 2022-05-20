@@ -4,7 +4,7 @@ const match = express.Router();
 
 const {
     requestMatch,
-    receiveMatches
+    receiveMatch
 } = require('../queries/matches');
 
 match.post('/', async (req, res) => {
@@ -12,25 +12,25 @@ match.post('/', async (req, res) => {
     const { body } = req;
     const matchRequest = await requestMatch(body.request_from, body.request_to)
     matchRequest ? res.json({ 
-    success: true, 
-            payload: matchRequest }) :
+        success: true, 
+        payload: matchRequest }) :
     res.status(404).send({
         success: false,
-            payload: "/this match is not found/" });
+        payload: "/this match is not found/" });
 });
 
 
 
 match.get('/', async (req, res) => {
-    console.log("GET all matches from our matches table")
-    const getAllMatches = await receiveMatches();
-    getAllMatches ? 
+    console.log("GET a match from our matches table")
+    const getMatch = await receiveMatch();
+    getMatch ? 
     res.json({ 
         success: true,
-            payload: getAllMatches}) : 
+        payload: getMatch}) : 
     res.status(404).send({ 
         success: false,
-            payload: "/page not found/"});
+        payload: "/page not found/"});
 });
 
 
