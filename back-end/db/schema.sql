@@ -12,3 +12,12 @@ CREATE TABLE users (
     food_pref VARCHAR(50) DEFAULT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE match_requests (
+    id SERIAL PRIMARY KEY, 
+    request_from INTEGER REFERENCES users (id),
+    request_to INTEGER REFERENCES users (id),
+    request_status INTEGER,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date_accepted TIMESTAMP
+)
