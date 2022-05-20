@@ -9,13 +9,15 @@ const requestMatch = async (current_user_id, match_user_id) => {
 
     try{
         console.log("Hitting requestMatch query")
-        const sendMatchRequest = await db.one("INSERT INTO match_requests (request_from, request_to) VALUES ($1, $2)", [current_user_id, match_user_id]);
+        const sendMatchRequest = await db.one("INSERT INTO match_requests (request_from, request_to) VALUES ($1, $2) RETURNING *", [current_user_id, match_user_id]);
         return sendMatchRequest;
-    }catch{
-        console.log("Error from sendMatchRequest query ");
+    }catch (error) {
+        console.log("Error from requestMatch query ");
     }
 
 }
+
+
 
 // // Select all users
 // const getMatch = async (request_from_id, request_to_id, request_status) => {
