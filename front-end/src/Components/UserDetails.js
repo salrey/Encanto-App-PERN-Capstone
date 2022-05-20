@@ -9,6 +9,7 @@ const UserDetails = () => {
     const navigate = useNavigate()
     const { id } = useParams();
     const [user, setUser] = useState([]);
+    const [matchState, setMatchState] = useState();
     const API = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -29,12 +30,28 @@ const UserDetails = () => {
         event.preventDefault();
         const submitted = event.nativeEvent.submitter.innerText
         if (submitted === "No") {
-            //"request_status? send -1 if request already exists or set up a separate block list"
-            //then navigate to next user
+            try {
+                //check if any requests exist for this currentUser
+                const match= await axios.get(`${API}/match-requests`, {request_to: currentUser.id, request_from: user.id})
+                //if so, then delete that request
+                setMatchState(match)
+                axios.delete(`${API}/match-requests`, {id: match.id})
+            } catch (err) {
+                //if there are no requests, then navigate to next user
+            }
         } else {
-            //before creating request, need to check if request was sent to current user and if it exists, then change request status to accept and notify user it's a match!
-            await axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
-            //otherwise, navigate to next user
+            try {
+              //check if any requests exist for this currentUser
+              const match = await axios.get(`${API}/match-requests`, {request_to: currentUser.id, request_from: user.id})
+              //PUT to change request_status 
+              setMatchState({...matchState, request_status: 1})
+              axios.put(`${API}/match-requests`, {match: matchState, match_id: match.id})
+              window.alert("Delighted to meet! Let's eat")
+            } catch (err) {
+                //if no existing request, then create a new one
+                await axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
+                //then navigate to next user
+            }
         }
     }
     
