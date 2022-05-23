@@ -27,7 +27,7 @@ export default function Home() {
 
         <React.Fragment>
             <CssBaseline/>
-                <Container maxWidth="sm">
+                <Container maxWidth="xs">
 
                     <Box sx={{display:'flex' }} alignItems="center" justifyContent="center">
                         <Stack spacing={-3} justifyContent="center" alignItems="center">

@@ -2,6 +2,7 @@ import React from 'react';
 import Users from "../Components/Users";
 import FoodForm from "../Components/FoodForm";
 import { useState } from "react";
+import Footer from '../Components/Footer';
 
 
 const Index = ({currentUser}) => {
@@ -12,6 +13,7 @@ const Index = ({currentUser}) => {
     <div>
         <Users food_pref={currentFoodPref} currentUser={currentUser}/>
         <FoodForm callBackFood={setFoodPref} currentUser={currentUser}/>
+        <Footer />
     </div>
   );
 }

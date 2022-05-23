@@ -36,6 +36,23 @@ const deleteMatch = async (match_id) => {
     } catch (error) {
         console.log("Error from deleteMatch query ");
     }
+};
+
+// For PUT
+const updateMatchStatus = async (match, match_id) => {
+
+    const {request_from, request_to, request_status, date_created, date_accepted} = match;
+  try{
+    console.log("Hitting from updateMatchStatus query ");
+    console.log("Match is: ", match);
+    console.log("match_id is: ", match_id);
+
+    const updateMatchStatus = await db.one("UPDATE match_requests SET request_from=$1, request_to=$2, request_status=$3, date_created=$4, date_accepted=$5 WHERE id=$6 RETURNING *", [request_from, request_to, request_status, date_created, date_accepted, match_id]);
+    return updateMatchStatus;
+    
+  }catch(err) {
+    console.log("Error from updateMatchStatus query ");
+  }
 }
 
 // // Select all users
@@ -65,7 +82,8 @@ const deleteMatch = async (match_id) => {
 module.exports = {
    requestMatch,
    receiveMatch,
-   deleteMatch
+   deleteMatch,
+   updateMatchStatus
 };
 
 
