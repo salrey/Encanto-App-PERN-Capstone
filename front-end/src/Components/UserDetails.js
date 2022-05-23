@@ -9,13 +9,8 @@ const UserDetails = () => {
     const navigate = useNavigate()
     const { id } = useParams();
     const [user, setUser] = useState([]);
-    const [currentUserRequest, setCurrentUserRequest] = useState({
-        request_to: "",
-        request_from: ""
-    });
+    const [matchRequest, setMatchRequest] = useState()
     const API = process.env.REACT_APP_API_URL;
-
-    console.log([].name)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,34 +22,32 @@ const UserDetails = () => {
                 return navigate("/not-found")
             }
         }    
-        fetchData();    
+        fetchData();  
     }, [API, id, navigate])
+    
+    useEffect(() => {
+        const fetchMatchRequests = async () => {
+            try {
+                const res = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`) 
+                setMatchRequest(res.data.payload)
+            } catch (err) {
+            }
+
+            try {
+                const res = await axios.get(`${API}/match-requests?request_to=${user.id}&request_from=${currentUser.id}`)
+                setMatchRequest(res.data.payload)
+            } catch (err) {
+            }
+        }
+        fetchMatchRequests();
+    }, [API, currentUser.id, user.id])
+
+    console.log(matchRequest)
 
     const handleSwipe = (event) => {
         event.preventDefault();
         const submitted = event.nativeEvent.submitter.innerText
-        const requestToCurrentUser = async () => {
-            try {
-                const res = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`)
-                setCurrentUserRequest({...currentUserRequest, request_to: res.data.payload})
-            } catch (error) {
-                return error
-            }
-        }
-        requestToCurrentUser();
-
-        const requestFromCurrentUser = async () => {
-            try {
-                const res = await axios.get(`${API}/match-requests?request_to=${user.id}&request_from=${currentUser.id}`)
-                setCurrentUserRequest({...currentUserRequest, request_from: res.data.payload})
-            } catch (error) {
-                return error
-            }
-        }
-        requestFromCurrentUser();
     
-        console.log("Any matches?", currentUserRequest)
-
         const insertDate = () => {
             const date = new Date();
     
@@ -66,42 +59,34 @@ const UserDetails = () => {
                 date.getMinutes(),
               ];
 
-              return `${month}/${day}/${year} ${hour}: ${minutes}`
-            
+              return `${month+1}/${day}/${year} ${hour}:${minutes}`
         }
 
-
-        //need to also consider that if this currentUser also sent that user a request, then changes their mind, so when they say no after saying yes, we are deleting that request 
-        // console.log(fetchData())
-        //if response.data.success is false, then no match_requests exist 
-        // if (submitted === "No") {
-        //     try {
-        //         //check if any requests exist for this currentUser
-        //         const match = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`)
-        //         //if so, then delete that request
-        //         if (match.data.payload.request_to) {
-        //             axios.delete(`${API}/match-requests?id=${match.data.payload.id}`)
-        //         }
-        //     } catch (err) {
-        //         //if there are no requests, then navigate to next user
-        //         return err
-        //     }
-        // } else {
-        //     try {
-        //         //check if any requests exist for this currentUser
-        //         const match = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`)
-        //         if (match.data.payload.request_to) {
-        //             axios.put(`${API}/match-requests`, {match: {...match.data.payload, request_status: 1, date_accepted: insertDate()}, match_id: match.data.payload.id})
-        //             window.alert("Delighted to meet! Let's eat")
-        //             //then navigate to chat 
-        //         } 
-        //     } catch (err) {
-        //         console.warn(err)
-        //         //if no existing request, then create a new one
-        //         axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
-        //         //then navigate to next user
-        //     }
-        // }
+        if (submitted === "No") {
+            // console.log(currentUserRequest)
+            console.log(matchRequest)
+            if (matchRequest?.request_to || matchRequest?.request_from) {
+                axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
+                setMatchRequest();
+                //then navigate to next user
+            } else {
+                //if there are no requests, then navigate to next user
+            }
+        } else {
+            if (matchRequest?.request_to) {
+                console.log(matchRequest)
+                const update = axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
+                setMatchRequest(update.data.payload)
+                window.alert("Delighted to meet! Let's eat")
+                //then navigate to chat 
+            } else if (matchRequest?.request_from) {
+                //navigate to next user
+            } else {
+                const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
+                setMatchRequest(newRequest.data.payload)
+                //then navigate to next user
+            }
+        }
     }
     
     return (
