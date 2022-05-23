@@ -24,18 +24,18 @@ const FoodForm = ({callBackFood, currentUser}) => {
     const options = [
         { value: "", label: "---select---" },
         { value: "american", label: "American"},
-        { value: "mexican", label: "Mexican"},
-        { value: "japanese", label: "Japanese"},
-        { value: "french", label: "French"},
-        { value: "korean", label: "Korean"},
+        { value: "caribbean", label: "Caribbean"},
         { value: "chinese", label: "Chinese"},
-        { value: "peruvian", label: "Peruvian"},
-        { value: "vegan", label: "Vegan"},
         { value: "english", label: "English"},
+        { value: "french", label: "French"},
         { value: "italian", label: "Italian"},
-        { value: "caribbean", label: "Caribbean"}
+        { value: "japanese", label: "Japanese"},
+        { value: "korean", label: "Korean"},
+        { value: "mexican", label: "Mexican"},
+        { value: "peruvian", label: "Peruvian"},
+        { value: "vegan", label: "Vegan"}
     ];
-
+    
     const dropdown = 
     <Select
         name="food_pref"
