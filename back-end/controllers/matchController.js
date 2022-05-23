@@ -25,6 +25,7 @@ match.post('/', async (req, res) => {
 
 match.get('/', async (req, res) => {
     console.log("GET a match from our matches table")
+    const [request_to, request_from] = req.query;
     const getMatch = await receiveMatch(request_to, request_from);
     getMatch ? 
     res.json({ 
