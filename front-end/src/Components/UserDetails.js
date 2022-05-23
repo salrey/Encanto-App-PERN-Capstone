@@ -54,6 +54,23 @@ const UserDetails = () => {
         requestFromCurrentUser();
     
         console.log("Any matches?", currentUserRequest)
+
+        const insertDate = () => {
+            const date = new Date();
+    
+            const [month, day, year, hour, minutes] = [
+                date.getMonth(),
+                date.getDate(),
+                date.getFullYear(),
+                date.getHours(),
+                date.getMinutes(),
+              ];
+
+              return `${month}/${day}/${year} ${hour}: ${minutes}`
+            
+        }
+
+
         //need to also consider that if this currentUser also sent that user a request, then changes their mind, so when they say no after saying yes, we are deleting that request 
         // console.log(fetchData())
         //if response.data.success is false, then no match_requests exist 
@@ -74,7 +91,7 @@ const UserDetails = () => {
         //         //check if any requests exist for this currentUser
         //         const match = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`)
         //         if (match.data.payload.request_to) {
-        //             axios.put(`${API}/match-requests`, {match: {...match.data.payload, request_status: 1}, match_id: match.data.payload.id})
+        //             axios.put(`${API}/match-requests`, {match: {...match.data.payload, request_status: 1, date_accepted: insertDate()}, match_id: match.data.payload.id})
         //             window.alert("Delighted to meet! Let's eat")
         //             //then navigate to chat 
         //         } 
