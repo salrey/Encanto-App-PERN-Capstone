@@ -19,7 +19,7 @@ const Users = ({food_pref, currentUser}) => {
             }
         }
         fetchData();
-    }, [API, food_pref])
+    }, [API, food_pref, currentUser.email])
 
     const display = food_pref && users.length ? users.map((user) => {
         return <Link to={"/users/"+user.id} key={user.id} state={{currentUser: currentUser}}>{user.name}</Link>

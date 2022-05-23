@@ -9,32 +9,83 @@ const UserDetails = () => {
     const navigate = useNavigate()
     const { id } = useParams();
     const [user, setUser] = useState([]);
+    const [matchRequest, setMatchRequest] = useState()
     const API = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`${API}/users/${id}`)
-                res.data.payload.email && setUser(res.data.payload)
+                setUser(res.data.payload)
             } catch (err) {
                 console.warn(err)
                 return navigate("/not-found")
             }
         }    
-        fetchData();    
+        fetchData();  
     }, [API, id, navigate])
+    
+    useEffect(() => {
+        const fetchMatchRequests = async () => {
+            try {
+                const res = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`) 
+                setMatchRequest(res.data.payload)
+            } catch (err) {
+            }
 
-    const handleSwipe = async (event) => {
-        console.log(currentUser)
+            try {
+                const res = await axios.get(`${API}/match-requests?request_to=${user.id}&request_from=${currentUser.id}`)
+                setMatchRequest(res.data.payload)
+            } catch (err) {
+            }
+        }
+        fetchMatchRequests();
+    }, [API, currentUser.id, user.id])
+
+    console.log(matchRequest)
+
+    const handleSwipe = (event) => {
         event.preventDefault();
         const submitted = event.nativeEvent.submitter.innerText
+    
+        const insertDate = () => {
+            const date = new Date();
+    
+            const [month, day, year, hour, minutes] = [
+                date.getMonth(),
+                date.getDate(),
+                date.getFullYear(),
+                date.getHours(),
+                date.getMinutes(),
+              ];
+
+              return `${month+1}/${day}/${year} ${hour}:${minutes}`
+        }
+
         if (submitted === "No") {
-            //"request_status? send -1 if request already exists or set up a separate block list"
-            //then navigate to next user
+            // console.log(currentUserRequest)
+            console.log(matchRequest)
+            if (matchRequest?.request_to || matchRequest?.request_from) {
+                axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
+                setMatchRequest();
+                //then navigate to next user
+            } else {
+                //if there are no requests, then navigate to next user
+            }
         } else {
-            //before creating request, need to check if request was sent to current user and if it exists, then change request status to accept and notify user it's a match!
-            await axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
-            //otherwise, navigate to next user
+            if (matchRequest?.request_to) {
+                console.log(matchRequest)
+                const update = axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
+                setMatchRequest(update.data.payload)
+                window.alert("Delighted to meet! Let's eat")
+                //then navigate to chat 
+            } else if (matchRequest?.request_from) {
+                //navigate to next user
+            } else {
+                const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
+                setMatchRequest(newRequest.data.payload)
+                //then navigate to next user
+            }
         }
     }
     
