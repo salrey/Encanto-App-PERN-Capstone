@@ -9,7 +9,6 @@ function initialize (passport) {
         const user = await getOneUserByEmail(email)
         console.log("What email?: ", email)
         console.log("What is pw ", password)
-        console.log("What is done ", done)
         console.log("user from passport: ", user)
 
         if (!user) {
@@ -30,11 +29,11 @@ function initialize (passport) {
 
     passport.use(new LocalStrategy({usernameField: 'email'}, authenticateUser))
     passport.serializeUser((user, done) => {
-        console.log("serializer: ", user)
+        console.log("hitting serializer: ", user)
         done(null, user.id)
     })
     passport.deserializeUser((user, done) => {
-        console.log("deserializer: ", user.id)
+        console.log("hitting deserializer: ", user.id)
         done(null, getOneUser(user.id))
     })
 }

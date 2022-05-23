@@ -2,7 +2,7 @@
 const express = require("express");
 const passport = require("passport")
 const flash = require("express-flash")
-const session = require("express-session")
+const session = require('express-session')
 const {getOneUserByEmail, getEveryUser, getOneUser} = require("../queries/users");
 
 const login = express.Router();
@@ -10,14 +10,16 @@ const initializePassport = require('../passport-config');
 initializePassport(passport)
 
 // MIDDLEWARE
-login.use(flash())
+
 login.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: { secure: true, maxAge: 60000 }
 }))
-login.use(passport.initialize())
-login.use(passport.session())
+login.use(flash())
+login.use(passport.initialize());
+login.use(passport.session());
 
 login.get('/test', async (req, res) => {
     try {
@@ -78,7 +80,7 @@ login.post('/', (req, res, next) => {
                 res.status(500).json({ message: 'Session save went bad.' });
                 return;
             }
-            console.log('---123456789098765432345678---', req.user);
+            console.log('---If !err, this should be printed---', req.user);
             res.status(200).json({errors: false, user: theUser});
         });
     })(req, res, next);
