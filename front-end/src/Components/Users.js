@@ -22,7 +22,7 @@ const Users = ({food_pref, currentUser}) => {
     }, [API, food_pref])
 
     const display = food_pref && users.length ? users.map((user) => {
-        return <Link to={"/users/"+user.id} key={user.id}>{user.name}</Link>
+        return <Link to={"/users/"+user.id} key={user.id} state={{currentUser: currentUser}}>{user.name}</Link>
     }) : "No users found at this time, try again later or choose another preference"
 
     return (
