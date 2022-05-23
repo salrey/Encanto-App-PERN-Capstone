@@ -1,7 +1,18 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import Container from '@mui/material/Container';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import { TextField, Typography } from "@mui/material";
+import SingUp from '../Assets/signup.png';
+import Stack from '@mui/material/Stack';
+import { Link } from "react-router-dom";
+import Back from '../Assets/Back.png';
+
+
 
 const API = process.env.REACT_APP_API_URL;
 
@@ -45,49 +56,122 @@ const handleSubmit = (event) => {
 };
 
     return (
-        <div className="signup-container">
-            <form className="signup-form" onSubmit={handleSubmit}>
-                <label className="new-user-name" htmlFor="name">Name</label>
-                <br></br>
-                    <input
-                        className="name-input"
-                        id="name"
-                        value={user.name}
-                        type="text"
-                        onChange={handleTextChange}
-                        placeholder="Name"
-                        required
-                    />
-        <br></br>
-                <label className="new-user-password" htmlFor="password">Password</label>
-                <br></br>
-                    <input
-                        className="password-input"
-                        id="password"
-                        value={user.password}
-                        type="text"
-                        onChange={handleTextChange}
-                        placeholder="Password"
-                        required
-                    />
-        <br></br>
-                <label className="new-user-email" htmlFor="email">Email</label>
-                <br></br>
-                    <input
-                        className="email-input"
-                        id="email"
-                        type="text"
-                        value={user.email}
-                        onChange={handleTextChange}
-                        placeholder="Email"
-                        required
-                    />
-        <br></br>
-                    
-                    <button className="submit-input">Submit</button>
-                    
-            </form>
-        </div>
+        <React.Fragment>
+            <CssBaseline>
+                <Container maxWidth="xs" >
+                    <Stack>
+                        <Typography sx={{ mt: 2}}></Typography>
+                        <Link to={'/'}>
+                            <img className="sign-up" src={Back} alt="back" style={{
+                                width: '55px',
+                                height: '35px',
+                                position: 'absolute',
+                                left:'1',
+                                top: '3'
+                                }}></img>
+                        </Link>
+                    </Stack>
+
+
+                    <Stack spacing={4} justifyContent="center" alignItems="center">
+                        <Typography variant="h5" sx={{
+                                mt: 9,
+                                textAlign: "center",
+                                fontFamily: "Signika Negative",
+                                fontWeight:'bold',
+                                fontSize: '60px',
+                                color: 'white'
+                                }}> Welcome!
+                        </Typography>
+                        <Box alignItems="center" justifyContent="center">
+                            <img className="sign-up" src={SingUp} alt="signup" style={{
+                                width: '357px',
+                                height: '235px',
+                                }}></img> 
+                        </Box>
+                    </Stack>
+
+                    <Stack spacing={1} >
+                        <form className="signup-form" onSubmit={handleSubmit}>
+                                <TextField
+                                    variant="standard"
+                                    className="name-input"
+                                    label='Name'
+                                    id="name"
+                                    value={user.name}
+                                    onChange={handleTextChange}
+                                    placeholder="Enter Name"
+                                    type="text"
+                                    fullWidth required
+                                />
+
+                                <TextField
+                                    variant="standard"
+                                    className="password-input"
+                                    label='Password'
+                                    id="password"
+                                    value={user.password}
+                                    onChange={handleTextChange}
+                                    placeholder="Enter password with at least 8 characters"
+                                    type="text"
+                                    fullWidth required
+                                />
+
+                                <TextField
+                                    variant="standard"
+                                    className="email-input"
+                                    label='email'
+                                    id="email"
+                                    value={user.email}
+                                    onChange={handleTextChange}
+                                    placeholder="Enter email"
+                                    type="text"
+                                    fullWidth required
+                                />                  
+
+                            <Box sx={{display:'flex' }} alignItems="center" justifyContent="center">
+                                    <Button
+                                        sx={{mt: 5,
+                                            fontSize: "20px",
+                                            bgcolor: '#FF2929',
+                                            width: '270px',
+                                            height: '50px',
+                                            borderRadius:'30px',
+                                            fontWeight:'bold',
+                                            color: 'white'}}
+                                        variant="contained"
+                                        color="inherit"
+                                        type="submit">
+                                    Sign Up
+                                </Button>
+                            </Box>
+
+                            <Typography variant="h5" sx={{
+                                mt: 2,
+                                textAlign: "center",
+                                fontFamily: "Signika Negative",
+                                fontWeight:'bold',
+                                fontSize: '15px',
+                                color: '#655969'
+                                }}>
+                                By clicking Signing up, you agree to our Terms and Conditions and Privacy Policy.
+                            </Typography>
+                            <Typography variant="h5" sx={{
+                                mt: 2,
+                                textAlign: "center",
+                                fontFamily: "Signika Negative",
+                                fontWeight:'bold',
+                                fontSize: '13px',
+                                color: '#655969'
+                                }}>
+                                Already have an account? <Link to={'/login'}>Sign in</Link>
+                            </Typography> 
+                        </form>
+
+                    </Stack>
+                </Container>
+            </CssBaseline>
+        </React.Fragment>
     )
 
 }
