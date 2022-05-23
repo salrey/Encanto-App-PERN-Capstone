@@ -50,7 +50,6 @@ match.delete("/", async (req, res) => {
         payload: "/page not found/"});
 })
 
-
 match.put("/", async (req, res) => {
     console.log("UPDATED a match with yes or no")
     const { match, match_id } = req.body;
