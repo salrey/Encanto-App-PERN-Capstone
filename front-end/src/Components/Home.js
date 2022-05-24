@@ -98,16 +98,22 @@ export default function Home() {
                             <Link to={`/signup`} style={{ textDecoration: 'none' }}>
                                 <Button className="signup-button" variant='contained' sx={{
                                     bgcolor: '#CA502B',
-                                    width: '25vh',
-                                    borderRadius:'30px',
-                                    fontWeight:'bold'}}>sign up</Button>
+                                    width:"30vh",
+                                    height:"6vh",
+                                    borderRadius:'35px',
+                                    fontSize: "17px",
+                                    textTransform: 'none',
+                                    fontWeight:'bold'}}>Sign Up</Button>
                             </Link>  
                             <Link to={`/login`} style={{ textDecoration: 'none' }}>
                                 <Button className="login-button" variant='contained' sx={{
                                     bgcolor: '#1D3251',
-                                    width: '25vh',
-                                    borderRadius:'30px',
-                                    fontWeight:'bold'}}>Log in</Button> 
+                                    width:"30vh",
+                                    height:"6vh",
+                                    borderRadius:'35px',
+                                    fontSize: "17px",
+                                    textTransform: 'none',
+                                    fontWeight:'bold'}}>Log In</Button> 
                             </Link>
                         </Stack>
 
