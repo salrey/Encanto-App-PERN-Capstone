@@ -7,42 +7,42 @@ const UserDetails = () => {
     const location = useLocation();
     const { currentUser, users } = location.state;
     const navigate = useNavigate()
-    const { id } = useParams();
-    const [user, setUser] = useState([]);
+    // const { id } = useParams();
+    // const [user, setUser] = useState([]);
     const [matchRequest, setMatchRequest] = useState()
-    const [ userId, setUserId ] = useState(id);
+    // const [ userId, setUserId ] = useState(users[index].id);
     const [ index, setIndex ] = useState(0);
     const API = process.env.REACT_APP_API_URL;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get(`${API}/users/${userId}`)
-                setUser(res.data.payload)
-            } catch (err) {
-                console.warn(err)
-                return navigate("/not-found")
-            }
-        }    
-        fetchData();  
-    }, [API, userId, navigate])
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const res = await axios.get(`${API}/users/${userId}`)
+    //             setUser(res.data.payload)
+    //         } catch (err) {
+    //             console.warn(err)
+    //             return navigate("/not-found")
+    //         }
+    //     }    
+    //     fetchData();  
+    // }, [API, userId, navigate])
     
     useEffect(() => {
         const fetchMatchRequests = async () => {
             try {
-                const res = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${user.id}`) 
+                const res = await axios.get(`${API}/match-requests?request_to=${currentUser.id}&request_from=${users[index].id}`) 
                 setMatchRequest(res.data.payload)
             } catch (err) {
             }
 
             try {
-                const res = await axios.get(`${API}/match-requests?request_to=${user.id}&request_from=${currentUser.id}`)
+                const res = await axios.get(`${API}/match-requests?request_to=${users[index].id}&request_from=${currentUser.id}`)
                 setMatchRequest(res.data.payload)
             } catch (err) {
             }
         }
         fetchMatchRequests();
-    }, [API, currentUser.id, user.id])
+    }, [API, currentUser.id, users[index].id])
 
     const handleSwipe = (event) => {
         event.preventDefault();
@@ -70,12 +70,12 @@ const UserDetails = () => {
                 //then navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                setUserId(users[i].id);
+                // setUserId(users[i].id);
             } else {
                 //if there are no requests, then navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                setUserId(users[i].id);
+                // setUserId(users[i].id);
             }
         } else {
             if (matchRequest?.request_to) {
@@ -88,14 +88,14 @@ const UserDetails = () => {
                 //navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                setUserId(users[i].id);
+                // setUserId(users[i].id);
             } else {
-                const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
-                setMatchRequest(newRequest.data.payload)
+                const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: users[index].id})
+                setMatchRequest(newRequest.data.payload);
                 //then navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                setUserId(users[i].id);
+                // setUserId(users[i].id);
             }
         }
     }
@@ -105,8 +105,8 @@ const UserDetails = () => {
             <Link to={"/users"}> Back </Link>
             <div> 
                 User Details 
-                <div>{user.name}</div>
-                <div>{user.email}</div>
+                <div>{users[index].name}</div>
+                <div>{users[index].email}</div>
             </div>
             <form onSubmit={handleSwipe}>
                 <button id="request_status" name="request_status" type="submit">No</button>
