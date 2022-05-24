@@ -2,20 +2,23 @@ import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import { use } from 'express/lib/application';
 
 const UserDetails = () => {
     const location = useLocation();
-    const {currentUser} = location.state;
+    const { currentUser, users } = location.state;
     const navigate = useNavigate()
     const { id } = useParams();
     const [user, setUser] = useState([]);
     const [matchRequest, setMatchRequest] = useState()
+    const [ userId, setUserId ] = useState(id);
+    const [ index, setIndex ] = useState(0);
     const API = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${API}/users/${id}`)
+                const res = await axios.get(`${API}/users/${userId}`)
                 setUser(res.data.payload)
             } catch (err) {
                 console.warn(err)
@@ -23,7 +26,7 @@ const UserDetails = () => {
             }
         }    
         fetchData();  
-    }, [API, id, navigate])
+    }, [API, userId, navigate])
     
     useEffect(() => {
         const fetchMatchRequests = async () => {
@@ -42,6 +45,8 @@ const UserDetails = () => {
         fetchMatchRequests();
     }, [API, currentUser.id, user.id])
 
+    console.log("Location:", location)
+
     console.log(matchRequest)
 
     const handleSwipe = (event) => {
@@ -57,9 +62,9 @@ const UserDetails = () => {
                 date.getFullYear(),
                 date.getHours(),
                 date.getMinutes(),
-              ];
+            ];
 
-              return `${month+1}/${day}/${year} ${hour}:${minutes}`
+            return `${month+1}/${day}/${year} ${hour}:${minutes}`
         }
 
         if (submitted === "No") {
@@ -69,8 +74,14 @@ const UserDetails = () => {
                 axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
                 setMatchRequest();
                 //then navigate to next user
+                const i = index + 1;
+                setIndex(i);
+                setUserId(users[i].id);
             } else {
                 //if there are no requests, then navigate to next user
+                const i = index + 1;
+                setIndex(i);
+                setUserId(users[i].id);
             }
         } else {
             if (matchRequest?.request_to) {
@@ -81,10 +92,16 @@ const UserDetails = () => {
                 //then navigate to chat 
             } else if (matchRequest?.request_from) {
                 //navigate to next user
+                const i = index + 1;
+                setIndex(i);
+                setUserId(users[i].id);
             } else {
                 const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: user.id})
                 setMatchRequest(newRequest.data.payload)
                 //then navigate to next user
+                const i = index + 1;
+                setIndex(i);
+                setUserId(users[i].id);
             }
         }
     }
