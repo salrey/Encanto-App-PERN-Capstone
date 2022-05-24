@@ -37,8 +37,9 @@ const handleSubmit = async (event) => {
     const fetchData = async () => {
         try {
           console.log("Hitting logIn page");
-          const res = await axios.post(`${API}/login`, {password:input.password, email:input.email,withCredentials: true});
-          setCurrentUser(res.data.user);
+          const res = await axios.post(`${API}/login`,  {password:input.password, email:input.email,withCredentials: true});
+          console.log("how does res look like: ", res.data)
+          setCurrentUser(res.data);
           setIsLoggedIn(true);
           navigate('/users');
           

@@ -1,38 +1,25 @@
 // DEPENDENCIES
 const express = require("express");
-const passport = require("passport")
-const flash = require("express-flash")
-const session = require('express-session')
-const {getOneUserByEmail, getEveryUser, getOneUser} = require("../queries/users");
-
+const flash = require("express-flash");
+const session = require('express-session');
+const passport = require("passport");
+const {getOneUserByEmail} = require("../queries/users");
 const login = express.Router();
 const initializePassport = require('../passport-config');
 initializePassport(passport)
 
 // MIDDLEWARE
 
-login.use(session({
+login.use(flash())
+login.use(
+  session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true, maxAge: 60000 }
+  cookie: { secure: true, maxAge: (4 * 60 * 60 * 1000)}
 }))
-login.use(flash())
 login.use(passport.initialize());
 login.use(passport.session());
-
-login.get('/test', async (req, res) => {
-    try {
-        const allUsers = await getEveryUser();
-
-        res.json({
-            success: true,
-            payload: allUsers
-        }) 
-    }catch (err){
-        throw err
-    }
-});
 
 // Get a user for login by email
 login.get('/:email', async (req, res) => {
@@ -53,35 +40,36 @@ login.get('/:email', async (req, res) => {
     }
 });
 
-// login.post('/', passport.authenticate('local', {
-//     // successRedirect: '/users',
-//     // failureRedirect: '/login',
-//     failureFlash: true
-// }), function(req, res) {
-//     res.json(req.user);
-//  }
-// )
+login.post('/', passport.authenticate('local', {
+    // successRedirect: '/users',
+    // failureRedirect: '/login',
+    failureFlash: true
+}), function(req, res) {
+    res.json(req.user);
+ }
+)
 
 login.post('/', (req, res, next) => {
     passport.authenticate('local', (err, theUser, failureDetails) => {
+        
         if (err) {
             res.status(500).json({ message: 'Something went wrong authenticating user' });
             return;
         }
-
         if (!theUser) {
             res.status(401).json(failureDetails);
             return;
         }
-
+        console.log("failure details from line 76: ", failureDetails)
         // save user in session
-        req.login(theUser, (err) => {
+        req.login(theUser, () => {
+            console.log("err from loginController: ", err)
             if (err) {
                 res.status(500).json({ message: 'Session save went bad.' });
                 return;
-            }
+            } 
             console.log('---If !err, this should be printed---', req.user);
-            res.status(200).json({errors: false, user: theUser});
+            res.status(200).json({errors: false, user: theUser}); 
         });
     })(req, res, next);
 });
