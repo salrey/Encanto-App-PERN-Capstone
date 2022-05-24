@@ -1,31 +1,16 @@
 import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
     const location = useLocation();
     const { currentUser, users } = location.state;
-    const navigate = useNavigate()
-    // const { id } = useParams();
-    // const [user, setUser] = useState([]);
+    // const navigate = useNavigate()
     const [matchRequest, setMatchRequest] = useState()
-    // const [ userId, setUserId ] = useState(users[index].id);
     const [ index, setIndex ] = useState(0);
     const API = process.env.REACT_APP_API_URL;
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const res = await axios.get(`${API}/users/${userId}`)
-    //             setUser(res.data.payload)
-    //         } catch (err) {
-    //             console.warn(err)
-    //             return navigate("/not-found")
-    //         }
-    //     }    
-    //     fetchData();  
-    // }, [API, userId, navigate])
     
     useEffect(() => {
         const fetchMatchRequests = async () => {
@@ -42,7 +27,7 @@ const UserDetails = () => {
             }
         }
         fetchMatchRequests();
-    }, [API, currentUser.id, users[index].id])
+    }, [API, currentUser.id, users, index])
 
     const handleSwipe = (event) => {
         event.preventDefault();
@@ -70,12 +55,10 @@ const UserDetails = () => {
                 //then navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                // setUserId(users[i].id);
             } else {
                 //if there are no requests, then navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                // setUserId(users[i].id);
             }
         } else {
             if (matchRequest?.request_to) {
@@ -88,14 +71,12 @@ const UserDetails = () => {
                 //navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                // setUserId(users[i].id);
             } else {
                 const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: users[index].id})
                 setMatchRequest(newRequest.data.payload);
                 //then navigate to next user
                 const i = index + 1;
                 setIndex(i);
-                // setUserId(users[i].id);
             }
         }
     }
