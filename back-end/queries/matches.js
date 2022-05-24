@@ -1,7 +1,6 @@
 // Import database
 const db = require("../db/dbConfig");
 
-// /request_from, request_to, request_status,
 
 // For POST
 const requestMatch = async (current_user_id, match_user_id) => {
@@ -54,28 +53,6 @@ const updateMatchStatus = async (match, match_id) => {
     console.log("Error from updateMatchStatus query ");
   }
 }
-
-// // Select all users
-// const getMatch = async (request_from_id, request_to_id, request_status) => {
-//     try{
-//         const match = await db.one("SELECT * FROM users WHERE request_from=$1 AND request_to=$2", [request_from_id, request_to_id]);
-//         return match;
-//     }catch (error) {
-//         console.log("Error from getEveryUser query ")
-//     }
-// }
-
-// // Get one user
-// const getOneUser = async (id) => {
-//     try{
-//         const oneUser = await db.one("SELECT * FROM users WHERE id=$1", id);
-
-//         return oneUser
-//     }catch (error) {
-//         console.log("Error from getOneUser query");
-//         return error;
-//     }
-// };
 
 
 // Export queries 
