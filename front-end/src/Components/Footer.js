@@ -20,7 +20,7 @@ return (
     <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, backgroundColor:"white" }}>
         <Box sx={{ display:"flex", justifyContent:"center"}}>
         <Toolbar>
-          <Link to={"/users"}>
+          <Link to={"/"}>
             <IconButton aria-label="home-icon">
                 <HomeIcon sx={{color:"#747474", mr:"5vh", '&:hover': {color: "#F9C17A"}}} fontSize="large"/>
             </IconButton>

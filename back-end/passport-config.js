@@ -26,15 +26,16 @@ function initialize (passport) {
             return done (error)
         }
     }
-
+    
     passport.use(new LocalStrategy({usernameField: 'email'}, authenticateUser))
     passport.serializeUser((user, done) => {
         console.log("hitting serializer: ", user)
-        done(null, user.id)
+        return done(null, user.id)
     })
+
     passport.deserializeUser((user, done) => {
         console.log("hitting deserializer: ", user.id)
-        done(null, getOneUser(user.id))
+        return done(null, getOneUser(user.id))
     })
 }
 
