@@ -48,7 +48,7 @@ const UserDetails = () => {
         }
 
         if (submitted === "No") {
-            console.log(matchRequest)
+            // console.log(matchRequest)
             if (matchRequest?.request_to || matchRequest?.request_from) {
                 axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
                 setMatchRequest();

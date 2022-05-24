@@ -23,6 +23,7 @@ const receiveMatch = async (request_to, request_from) => {
         return getMatch;
     } catch (error) {
         console.log("Error from receiveMatch query ");
+        return error
     }
 }
 // For DELETE
