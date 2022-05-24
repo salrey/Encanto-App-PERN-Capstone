@@ -2,7 +2,6 @@ import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
-import { use } from 'express/lib/application';
 
 const UserDetails = () => {
     const location = useLocation();
@@ -45,10 +44,6 @@ const UserDetails = () => {
         fetchMatchRequests();
     }, [API, currentUser.id, user.id])
 
-    console.log("Location:", location)
-
-    console.log(matchRequest)
-
     const handleSwipe = (event) => {
         event.preventDefault();
         const submitted = event.nativeEvent.submitter.innerText
@@ -68,7 +63,6 @@ const UserDetails = () => {
         }
 
         if (submitted === "No") {
-            // console.log(currentUserRequest)
             console.log(matchRequest)
             if (matchRequest?.request_to || matchRequest?.request_from) {
                 axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
