@@ -21,8 +21,6 @@ match.post('/', async (req, res) => {
         payload: "/this match is not found/" });
 });
 
-
-
 match.get('/', async (req, res) => {
     console.log("GET a match from our matches table")
     const { request_to, request_from } = req.query;
@@ -51,7 +49,6 @@ match.delete("/", async (req, res) => {
         success: false,
         payload: "/page not found/"});
 })
-
 
 match.put("/", async (req, res) => {
     console.log("UPDATED a match with yes or no")

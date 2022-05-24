@@ -2,7 +2,7 @@
 const express = require("express");
 const passport = require("passport")
 const flash = require("express-flash")
-const session = require("express-session")
+const session = require('express-session')
 const {getOneUserByEmail, getEveryUser, getOneUser} = require("../queries/users");
 
 const login = express.Router();
@@ -10,14 +10,16 @@ const initializePassport = require('../passport-config');
 initializePassport(passport)
 
 // MIDDLEWARE
-login.use(flash())
+
 login.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: { secure: true, maxAge: 60000 }
 }))
-login.use(passport.initialize())
-login.use(passport.session())
+login.use(flash())
+login.use(passport.initialize());
+login.use(passport.session());
 
 login.get('/test', async (req, res) => {
     try {
@@ -51,14 +53,39 @@ login.get('/:email', async (req, res) => {
     }
 });
 
-login.post('/', passport.authenticate('local', {
-    // successRedirect: '/users',
-    // failureRedirect: '/login',
-    failureFlash: true
-}), function(req, res) {
-    res.json(req.user);
- }
-)
+// login.post('/', passport.authenticate('local', {
+//     // successRedirect: '/users',
+//     // failureRedirect: '/login',
+//     failureFlash: true
+// }), function(req, res) {
+//     res.json(req.user);
+//  }
+// )
+
+login.post('/', (req, res, next) => {
+    passport.authenticate('local', (err, theUser, failureDetails) => {
+        if (err) {
+            res.status(500).json({ message: 'Something went wrong authenticating user' });
+            return;
+        }
+
+        if (!theUser) {
+            res.status(401).json(failureDetails);
+            return;
+        }
+
+        // save user in session
+        req.login(theUser, (err) => {
+            if (err) {
+                res.status(500).json({ message: 'Session save went bad.' });
+                return;
+            }
+            console.log('---If !err, this should be printed---', req.user);
+            res.status(200).json({errors: false, user: theUser});
+        });
+    })(req, res, next);
+});
+
 
 function checkAuthenticated (req, res, next) {
     if (req.isAuthenticated()) {
