@@ -31,5 +31,5 @@ const Users = ({food_pref, currentUser}) => {
     </section>
     );
 }
-  
+
 export default Users;
