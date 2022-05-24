@@ -99,7 +99,7 @@ const handleSubmit = async (event) => {
                    mt:"5vh"
                }}
             >
-            <img src={UpperBurger}/>
+            <img src={UpperBurger} alt="upper-burger"/>
             </Box>
                 <Box sx={{
                     display:"flex",
@@ -124,7 +124,7 @@ const handleSubmit = async (event) => {
                        
                     }}
                     />
-                <img src={Cheese} 
+                <img src={Cheese} alt="cheese"
                     style={{marginTop:"1.5vh"}}
                 />
                      <input
@@ -145,7 +145,7 @@ const handleSubmit = async (event) => {
                  
                     }}
                     />
-                <img src={BottomHamburger} 
+                <img src={BottomHamburger} alt="bottom-burger"
                  style={{
                      marginTop:"1.5vh"
                 }}

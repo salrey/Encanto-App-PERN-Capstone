@@ -1,15 +1,32 @@
 import React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select";
+import { useNavigate } from 'react-router-dom';
 
 
-const FoodForm = ({callBackFood, currentUser}) => {
+const FoodForm = ({ currentUser }) => {
     const API = process.env.REACT_APP_API_URL;
-    
+    const navigate = useNavigate();
     const [ user, setUser ] = useState(currentUser);
+    const [ users, setUsers ] = useState();
 
-    // console.log("foodform: ", user)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`${API}/users?food_pref=${user.food_pref}`);
+                // console.log("response data", res.data)
+                setUsers(res.data.payload.filter((user) => user.email !== currentUser.email))
+            } catch (err) {
+                console.warn(err)
+                //navigate to new page when there are no users for this preference 
+                // "No users found at this time, try again later or choose another preference"
+            }
+        }
+        fetchData();
+    }, [API, user.food_pref, currentUser.email])
+
+
 
     const handleInputChange = (event) => {
         setUser({ ...user, food_pref: event.value});
@@ -18,7 +35,7 @@ const FoodForm = ({callBackFood, currentUser}) => {
     const handleEdit = async (event) => {
         event.preventDefault();
         await axios.put(`${API}/users/${user.id}`, user);
-        callBackFood(user.food_pref)
+        navigate(`/users/${users[0].id}`, {state: {currentUser: user, users: users}})
     };
 
     const options = [
@@ -48,7 +65,7 @@ const FoodForm = ({callBackFood, currentUser}) => {
 
     return (
     <form onSubmit={handleEdit}>
-        <label htmlFor="food_pref"> Choose food preference:</label>  
+        <label htmlFor="food_pref"> What are you craving? </label>  
         {dropdown}      
         <button type="submit">Submit</button>
     </form>
