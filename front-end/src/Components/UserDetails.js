@@ -87,6 +87,8 @@ const UserDetails = () => {
         }
     }
 
+    console.log("users from DserDetails: ", users)
+
     return (
         <>
             <Link to={"/users"}> Back </Link>
