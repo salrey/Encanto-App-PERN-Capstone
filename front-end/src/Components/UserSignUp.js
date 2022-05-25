@@ -3,7 +3,6 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { TextField, Typography } from "@mui/material";
@@ -56,8 +55,7 @@ const handleSubmit = (event) => {
 };
 
     return (
-        <React.Fragment>
-            <CssBaseline>
+            <div style={{backgroundColor:"#FFA756"}}>
                 <Container maxWidth="xs" >
                     <Stack>
                         <Typography sx={{ mt: 2}}></Typography>
@@ -129,15 +127,18 @@ const handleSubmit = (event) => {
                                     fullWidth required
                                 />                  
 
-                            <Box sx={{display:'flex' }} alignItems="center" justifyContent="center">
+                            <Box sx={{ display:'flex' }} alignItems="center" justifyContent="center">
                                     <Button
                                         sx={{mt: 5,
-                                            fontSize: "20px",
+                                            fontSize: "3.3vh",
+                                            fontFamily: "Signika Negative",
                                             bgcolor: '#FF2929',
-                                            width: '270px',
-                                            height: '50px',
+                                            width:"35vh",
+                                            height:"7vh",
                                             borderRadius:'30px',
-                                            fontWeight:'bold',
+                                            fontWeight: 600,
+                                            textShadow: "2px 0 white",
+                                            textTransform: 'none',
                                             color: 'white'}}
                                         variant="contained"
                                         color="inherit"
@@ -165,13 +166,12 @@ const handleSubmit = (event) => {
                                 color: '#655969'
                                 }}>
                                 Already have an account? <Link to={'/login'}>Sign in</Link>
-                            </Typography> 
+                            </Typography>
+                            <Typography sx={{ mt: 8.7}}></Typography>
                         </form>
-
                     </Stack>
                 </Container>
-            </CssBaseline>
-        </React.Fragment>
+            </div>  
     )
 
 }
