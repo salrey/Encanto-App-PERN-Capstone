@@ -9,8 +9,7 @@ import Container from '@mui/material/Container';
 const Index = ({currentUser}) => {
 
   return (
-    // <div style={{backgroundColor:"#AE6D4F"}}>
-    <div>
+    <div style={{backgroundColor:"#AE6D4F"}}>
       <Container maxWidth="xs">
           <FoodForm currentUser={currentUser}/>
           <Footer />
