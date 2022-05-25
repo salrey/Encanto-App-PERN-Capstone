@@ -17,7 +17,7 @@ export default function Footer () {
 
 return (
 
-    <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0, backgroundColor:"white" }}>
+    <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, backgroundColor:"white" }}>
         <Box sx={{ display:"flex", justifyContent:"center"}}>
         <Toolbar>
           <Link to={"/"}>
