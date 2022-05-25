@@ -24,7 +24,7 @@ const FoodForm = ({ currentUser }) => {
             }
         }
         fetchData();
-    }, [API, user.food_pref, currentUser.email])
+    }, [API, user.food_pref, currentUser.id, currentUser.email])
 
 
 
