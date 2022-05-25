@@ -2,12 +2,12 @@ import React from 'react';
 import axios from "axios"
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const UserDetails = () => {
     const location = useLocation();
     const { currentUser, users } = location.state;
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const [matchRequest, setMatchRequest] = useState()
     const [ index, setIndex ] = useState(0);
     const API = process.env.REACT_APP_API_URL;
@@ -54,11 +54,21 @@ const UserDetails = () => {
                 setMatchRequest();
                 //then navigate to next user
                 const i = index + 1;
-                setIndex(i);
+                if (i <= users.length -1) {
+                    setIndex(i);
+                } else {
+                    window.alert("That's all for now! Try again later or choose another food preference.")
+                    navigate("/users")
+                }
             } else {
                 //if there are no requests, then navigate to next user
                 const i = index + 1;
-                setIndex(i);
+                if (i <= users.length -1) {
+                    setIndex(i);
+                } else {
+                    window.alert("That's all for now! Try again later or choose another food preference.")
+                    navigate("/users")
+                }
             }
         } else {
             if (matchRequest?.request_to) {
@@ -66,17 +76,28 @@ const UserDetails = () => {
                 const update = axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
                 setMatchRequest(update.data.payload)
                 window.alert("Delighted to meet! Let's eat")
-                //then navigate to chat 
+                //then navigate to chat, pass the props needed to use cometChat 
+                navigate("/chat")
             } else if (matchRequest?.request_from) {
                 //navigate to next user
                 const i = index + 1;
-                setIndex(i);
+                if (i <= users.length -1) {
+                    setIndex(i);
+                } else {
+                    window.alert("That's all for now! Try again later or choose another food preference.")
+                    navigate("/users")
+                }
             } else {
                 const newRequest = axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: users[index].id})
                 setMatchRequest(newRequest.data.payload);
                 //then navigate to next user
                 const i = index + 1;
-                setIndex(i);
+                if (i <= users.length -1) {
+                    setIndex(i);
+                } else {
+                    window.alert("That's all for now! Try again later or choose another food preference.")
+                    navigate("/users")
+                }
             }
         }
     }

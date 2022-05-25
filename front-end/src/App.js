@@ -8,6 +8,7 @@ import Index from "./Pages/Index";
 import Show from "./Pages/Show";
 import Redirect from "./Pages/Redirect";
 import "./App.css"
+import Chat from "./Pages/Chat";
 
 
 const App = () => {
@@ -43,6 +44,10 @@ console.log("the current user: ", currentUser)
          <Route
           path="/users/:id"
           element={<Show/>}
+         />
+         <Route
+          path="/chat"
+          element={<Chat/>}
          />
          <Route
           path="*"
