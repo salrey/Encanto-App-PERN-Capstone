@@ -10,7 +10,6 @@ import mainImg from "../Assets/main_img.png"
 import slider2 from "../Assets/slider2.png"
 import slider3 from "../Assets/slider3.png"
 import { Typography } from "@mui/material";
-// import { useRef } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react/swiper-react';
 import 'swiper/swiper.min.css';
 import 'swiper/modules/effect-fade/effect-fade.min.css';

@@ -16,15 +16,15 @@ const FoodForm = ({ currentUser }) => {
             try {
                 const res = await axios.get(`${API}/users?food_pref=${user.food_pref}`);
                 // console.log("response data", res.data)
-                setUsers(res.data.payload.filter((user) => user.email !== currentUser.email))
+                if (res.data.payload.length !== 1 && res.data.payload[0].id !== currentUser.id) {
+                    setUsers(res.data.payload.filter((user) => user.email !== currentUser.email))
+                }
             } catch (err) {
                 console.warn(err)
-                //navigate to new page when there are no users for this preference 
-                // "No users found at this time, try again later or choose another preference"
             }
         }
         fetchData();
-    }, [API, user.food_pref, currentUser.email])
+    }, [API, user.food_pref, currentUser.id, currentUser.email])
 
 
 
@@ -35,7 +35,11 @@ const FoodForm = ({ currentUser }) => {
     const handleEdit = async (event) => {
         event.preventDefault();
         await axios.put(`${API}/users/${user.id}`, user);
-        navigate(`/users/${users[0].id}`, {state: {currentUser: user, users: users}})
+        if (users) {
+            navigate(`/users/${users[0].id}`, {state: {currentUser: user, users: users}})
+        } else {
+            window.alert("No users found at this time. Try again later or select another type of food.")
+        }
     };
 
     const options = [
