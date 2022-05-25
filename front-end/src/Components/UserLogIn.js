@@ -39,7 +39,7 @@ const handleSubmit = async (event) => {
           console.log("Hitting logIn page");
           const res = await axios.post(`${API}/login`,  {password:input.password, email:input.email,withCredentials: true});
           console.log("how does res look like: ", res.data)
-          setCurrentUser(res.data);
+          setCurrentUser(res.data.user);
           setIsLoggedIn(true);
           navigate('/users');
           
