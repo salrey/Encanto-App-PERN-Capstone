@@ -25,13 +25,22 @@ match.get('/', async (req, res) => {
     console.log("GET a match from our matches table")
     const { request_to, request_from } = req.query;
     const getMatch = await receiveMatch(request_to, request_from);
-    getMatch ? 
-    res.json({ 
-        success: true,
-        payload: getMatch}) : 
-    res.status(404).send({ 
-        success: false,
-        payload: "/page not found/"});
+    if (getMatch) {
+        if (getMatch.result) {
+            res.json({
+                success: false,
+                payload: {}
+            })
+        } else {
+            res.json({ 
+                success: true,
+                payload: getMatch}) 
+        }
+    } else {
+        res.status(404).send({ 
+            success: false,
+            payload: "/page not found/"});
+    }
 });
 
 
