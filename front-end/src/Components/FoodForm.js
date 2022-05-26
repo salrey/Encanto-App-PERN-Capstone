@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
 import Grid from '@mui/material/Grid';
+import '../Styles/FoodForm.css';
 
 import american from "../Food-assets/american.jpg";
 import caribbean from "../Food-assets/caribbean.jpg";
@@ -31,7 +32,6 @@ const FoodForm = ({ currentUser }) => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(`${API}/users?food_pref=${user.food_pref}`);
-                // console.log("response data", res.data)
                 if (res.data.payload.length) {
                     setUsers(res.data.payload.filter((user) => user.email !== currentUser.email))
                 }
@@ -43,16 +43,13 @@ const FoodForm = ({ currentUser }) => {
     }, [API, user.food_pref, currentUser.id, currentUser.email])
 
     const handleInputChange = (event) => {
-        // console.log("onClick event", event)
         setUser({ ...user, food_pref: event.target.id});
     };
-    // console.log("currentUser food_pref", user.food_pref)
-
-    // console.log("users (testing): ", users)
+    
     const handleEdit = async (event) => {
         event.preventDefault();
         await axios.put(`${API}/users/${user.id}`, user);
-        if (users) {
+        if (users.length) {
             navigate(`/users/${users[0].id}`, {state: {currentUser: user, users: users}})
         } else {
             window.alert("No users found at this time. Try again later or select another type of food.")
@@ -96,40 +93,40 @@ const FoodForm = ({ currentUser }) => {
         <form onSubmit={handleEdit}>
             <Grid container spacing={3} sx={{ mt:2, height:"530px", overflow:"scroll", paddingLeft: 1}}>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="american" className="" src={american} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="american" className={user.food_pref === "american" ? "selection" : "image"} src={american} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="caribbean" className="" src={caribbean} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="caribbean" className={user.food_pref === "caribbean" ? "selection" : "image"} src={caribbean} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="chinese" className="" src={chinese} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="chinese" className={user.food_pref === "chinese" ? "selection" : "image"} src={chinese} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="english" className="" src={english} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="english" className={user.food_pref === "english" ? "selection" : "image"} src={english} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="french" className="" src={french} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="french" className={user.food_pref === "french" ? "selection" : "image"} src={french} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="indian" className="" src={indian} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="indian" className={user.food_pref === "indian" ? "selection" : "image"} src={indian} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="italian" className="" src={italian} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="italian" className={user.food_pref === "italian" ? "selection" : "image"} src={italian} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="japanese" className="" src={japanese} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="japanese" className={user.food_pref === "japanese" ? "selection" : "image"} src={japanese} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="korean" className="" src={korean} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="korean" className={user.food_pref === "korean" ? "selection" : "image"} src={korean} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="mexican" className="" src={mexican} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="mexican" className={user.food_pref === "mexican" ? "selection" : "image"} src={mexican} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="peruvian" className="" src={peruvian} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="peruvian" className={user.food_pref === "peruvian" ? "selection" : "image"} src={peruvian} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
                 <Grid item xs={6}>
-                    <img onClick={handleInputChange} id="vegan" className="" src={vegan} alt="american-food" style={{height: "141px", width: "161px"}} />
+                    <img onClick={handleInputChange} id="vegan" className={user.food_pref === "vegan" ? "selection" : "image"} src={vegan} alt="american-food" style={{height: "141px", width: "161px"}} />
                 </Grid>
             </Grid>
             <Box 
