@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const LocalStrategy = require('passport-local').Strategy;
-// const { getOneUserByEmail, getOneUser } = require('./queries/users')
 
 
 function initialize (passport, getOneUserByEmail, getOneUser) {
@@ -30,14 +29,12 @@ function initialize (passport, getOneUserByEmail, getOneUser) {
     passport.use(new LocalStrategy({usernameField: 'email', session: true}, authenticateUser))
     passport.serializeUser((user, done) => {
         console.log("hitting serializer: ", user)
-        // return done(null, user.id)
-        done(null, user.id)
+        return done(null, user.id)
     })
 
     passport.deserializeUser((id, done) => {
         console.log("hitting deserializer: ", id)
-        // return done(null, getOneUser(id))
-        done(null, getOneUser(id))
+        return done(null, getOneUser(id))
     })
 }
 

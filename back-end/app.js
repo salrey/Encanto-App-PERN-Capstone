@@ -4,14 +4,11 @@ const express = require("express");
 const flash = require("express-flash");
 const session = require('express-session');
 const passport = require("passport");
-const methodOverride = require("method-override")
-const userController = require("./controllers/userController");
-// const logInController = require("./controllers/logInController");
-const matchController = require("./controllers/matchController");
-// const { initialize } = require("passport");
-const { getOneUserByEmail, getOneUser } = require('./queries/users')
+// const methodOverride = require("method-override")
 
-// match-requests
+const userController = require("./controllers/userController");
+const matchController = require("./controllers/matchController");
+const { getOneUserByEmail, getOneUser } = require('./queries/users')
 
 // CONFIGURATION
 const app = express();
@@ -38,43 +35,13 @@ app.use(passport.session());
 
 // ROUTES
 app.use("/users", userController);
-// app.use("/login", logInController);
 app.use("/match-requests", matchController);
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-// // error handlers
-
-// // development error handler
-// // will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//       res.status(err.status || 500);
-//       res.render('error', {
-//           message: err.message,
-//           error: err
-//       });
-//   });
-// }
-
-// // production error handler
-// // no stacktraces leaked to user
-// app.use(function(err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.render('error', {
-//       message: err.message,
-//       error: {}
-//   });
-// });
-
 
 app.get("/", (_, res) => {
   res.status(200).send("Welcome to EnCanto!");
+});
+app.get("*", (_, res) => {
+  res.status(404).send("This page has not been found");
 });
 
 app.post('/login', (req, res, next) => {
@@ -101,44 +68,11 @@ app.post('/login', (req, res, next) => {
   })(req, res, next)
 })
 
-app.delete("/logout", (req, res) => {
-  console.log("/logout req", req )
-  console.log("/logout res", res)
-  req.logOut();
-  res.redirect('/login')
-})
-
-    // (req, res, next);
-// });
-// app.post('/login', (req, res, next) => {
-//     passport.authenticate('local', (err, currentUser, info) => {
-        
-//         if (err) {
-//             res.status(500).json({ message: 'Something went wrong authenticating user' });
-//             return;
-//         }
-//         if (!currentUser) {
-//             res.status(401).json(info);
-//             return;
-//         }
-//         console.log("failure details from line 76: ", info)
-//         // save user in session
-//         req.login(currentUser, () => {
-//             console.log("err from loginController: ", err)
-//             if (err) {
-//                 res.status(500).json({ message: 'Session save went bad.' });
-//                 return;
-//             } 
-//             console.log('---If !err, this should be printed---', req.user);
-//             res.status(200).json({errors: false, user: currentUser}); 
-//         });
-//     })(req, res, next);
-// });
-
-
-app.get("*", (_, res) => {
-  res.status(404).send("This page has not been found");
-});
+//Logout in progress
+// app.delete("/logout", (req, res) => {
+//   req.logOut();
+//   res.redirect('/login')
+// })
 
 
 // EXPORT
