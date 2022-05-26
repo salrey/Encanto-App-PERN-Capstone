@@ -1,0 +1,8 @@
+main {
+    height: 100vh;
+    background-color: #FFC17A;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #BCBDDC;
+  }
