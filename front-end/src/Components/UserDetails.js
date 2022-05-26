@@ -4,6 +4,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Avatar from '../Assets/avatar2.jpg'
+import { Typography, Stack } from "@mui/material";
+import Back from '../Assets/Back.png';
+
+
+
 const UserDetails = () => {
     const location = useLocation();
     const { currentUser, users } = location.state;
@@ -87,23 +96,73 @@ const UserDetails = () => {
     }
 
 
+
+    const styles = {
+        customBorderRadius: {
+            borderRadius: 25
+        }
+    };
+
+
+
+
     return (
         <>
-            <Link to={"/users"}> Back </Link>
-            <div> 
-                User Details 
-                <div>{users[index].name}</div>
-                <div>{users[index].email}</div>
-            </div>
+        <Container>
+            
+            <Stack>
+                <Typography sx={{ mt: 2}}></Typography>
+                        <Link to={'/users'}>
+                            <img className="sign-up" src={Back} alt="back" style={{
+                                width: '55px',
+                                height: '35px',
+                                position: 'absolute',
+                                left:'1',
+                                top: '3'
+                                }}></img>
+                        </Link>
+            </Stack>
+            <Box justifyContent="center"
+                alignItems="center"
+                sx={{display:"flex", width: '100%', mt: 15}}>
+                <Paper style={styles.customBorderRadius} sx={{ 
+                    backgroundImage: `url(${Avatar})`,
+                    backgroundSize: '365px 464px',
+                    width: '200%',
+                    height: '60.5vh',
+                    textAlign: "center"}}>
+            <div>  
+                <div><Typography
+                sx={{
+                    mt: 52,
+                    textAlign: "center",
+                    fontFamily: "Signika Negative",
+                    fontWeight:'bold',
+                    fontSize: '25px',
+                    color: 'white'
+                    }}
+                >Name : {users[index].name}</Typography></div>
+                <div><Typography sx={{
+                    textAlign: "center",
+                    fontFamily: "Signika Negative",
+                    fontWeight:'bold',
+                    fontSize: '20px',
+                    color: 'white'
+                }}>Email : {users[index].email}</Typography></div>
+            
             {matchRequest?.request_status === 1 && <div> Great! You're already a combo. Would you like to continue your match with {users[index].name}?</div>}
+            </div> 
             <form onSubmit={handleSwipe}>
                 <button id="request_status" name="request_status" type="submit">No</button>
                 <button id="request_status" name="request_status" type="submit">Yes</button>
             </form>
+                </Paper>
+            </Box>
+        </Container>    
         </>
         
     );
 }
 
 export default UserDetails;
-  
+
