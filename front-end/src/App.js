@@ -39,7 +39,7 @@ console.log("the current user: ", currentUser)
          />
           <Route
           path="/users"
-          element={<Index currentUser={currentUser}/>}
+          element={<Index currentUser={currentUser} setCurrentUser={setCurrentUser}/>}
          />
          <Route
           path="/users/:id"

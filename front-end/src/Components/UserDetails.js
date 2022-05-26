@@ -77,7 +77,6 @@ const UserDetails = () => {
                 nextUser(index, users)
             }
         } else {
-            // console.log("matchRequest:", matchRequest)
             if (matchRequest?.request_to === currentUser.id && matchRequest?.request_status === 0) {
                 axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
                 window.alert("Delighted to meet! Let's eat.")
@@ -96,7 +95,6 @@ const UserDetails = () => {
         }
     }
 
-    console.log("users from DserDetails: ", users)
 
 
     const styles = {
