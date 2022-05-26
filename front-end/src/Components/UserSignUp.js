@@ -15,7 +15,7 @@ import Back from '../Assets/Back.png';
 
 const API = process.env.REACT_APP_API_URL;
 
-export default function UserSignUp ({ callBackUser }) {
+export default function UserSignUp () {
 
 let navigate = useNavigate();
 const [user, setUser] = useState({
@@ -29,15 +29,12 @@ const newUser = (addedUser) => {
     const fetchData = async () => {
         try {
             const res = await axios.post(`${API}/users/register`, addedUser);
-            console.log(res.data.payload)
             if(res.data.payload.constraint){
                 window.alert("That email address already exists")
             } else {
                 setUser(res.data.payload)
-                // callBackUser(res.data.payload)
                 navigate(`/login`)
             }
-
         } catch (error) {
             console.warn("catch", error)
         }
@@ -96,6 +93,7 @@ const handleSubmit = (event) => {
                                     className="name-input"
                                     label='Name'
                                     id="name"
+                                    name="name"
                                     value={user.name}
                                     onChange={handleTextChange}
                                     placeholder="Enter Name"
@@ -108,10 +106,11 @@ const handleSubmit = (event) => {
                                     className="password-input"
                                     label='Password'
                                     id="password"
+                                    name="password"
                                     value={user.password}
                                     onChange={handleTextChange}
                                     placeholder="Enter password with at least 8 characters"
-                                    type="text"
+                                    type="password"
                                     fullWidth required
                                 />
 
@@ -120,10 +119,11 @@ const handleSubmit = (event) => {
                                     className="email-input"
                                     label='email'
                                     id="email"
+                                    name="email"
                                     value={user.email}
                                     onChange={handleTextChange}
                                     placeholder="Enter email"
-                                    type="text"
+                                    type="email"
                                     fullWidth required
                                 />                  
 

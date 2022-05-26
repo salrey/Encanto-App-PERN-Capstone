@@ -37,7 +37,7 @@ const handleSubmit = async (event) => {
     const fetchData = async () => {
         try {
           console.log("Hitting logIn page");
-          const res = await axios.post(`${API}/login`,  {password:input.password, email:input.email,withCredentials: true});
+          const res = await axios.post(`${API}/login`,  {password:input.password, email:input.email, withCredentials: true});
           console.log("how does res look like: ", res.data)
           setCurrentUser(res.data.user);
           setIsLoggedIn(true);
@@ -109,7 +109,7 @@ const handleSubmit = async (event) => {
                 <input
                     id="email"
                     value={input.email}
-                    type="text"
+                    type="email"
                     onChange={handleChange}
                     placeholder="Email here..."
                     required
@@ -130,7 +130,7 @@ const handleSubmit = async (event) => {
                      <input
                     id="password"
                     value={input.password}
-                    type="text"
+                    type="password"
                     onChange={handleChange}
                     placeholder="password here..."
                     required
