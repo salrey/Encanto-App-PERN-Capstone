@@ -1,5 +1,7 @@
 const express = require("express");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const multer = require('multer')
+const path = require('path');
 
 const users = express.Router();
 
@@ -68,25 +70,79 @@ users.put('/:id', async (req, res) => {
     }
 })
 
+// CREATE USER
 
-//Create user
-users.post('/register', async (req, res) => {
-    const { body } = req;
-    console.log("Create new user");
-    try {
-        const hashedPassword = await bcrypt.hash(body.password, 10)
-        const user = await createUser(body, hashedPassword)
-        console.log("hashedPW: ", hashedPassword)
-        console.log("user: ", user)
-        user ? res.json({ 
-            success: true, 
-            payload: user 
-        }) : res.status(404).send({
-            success: false,
-            payload: "/user not found" });
-    } catch(err) {
-        throw err
-    }
+// config multer
+const storage = multer.diskStorage({
+    destination: function (req, file, next) {
+        //use path and __dirname to access your folder from root directory of your project
+      next(null, path.join(__dirname, '../../front-end/src/Components/uploads'));
+    },
+    filename: function (req, file, next) {
+      next(null, `${file.fieldname}-${Date.now()}${file.originalname.match(/\..*$/)[0]}`);
+    },
+});
+
+const fileUpload = multer({
+    storage: storage,
+    fileFilter: (req, file, next) => {
+      if (
+        file.mimetype == 'image/png' ||
+        file.mimetype == 'image/jpeg' ||
+        file.mimetype == 'image/jpg'
+      ) {
+        next(null, true);
+      } else {
+        next(null, false);
+        const err = new Error('Only .jpg .jpeg .png images are supported!');
+        err.name = 'ExtensionError';
+        return next(err);
+      }
+    },
+})
+
+// Register new user w. photo 
+users.post('/register', fileUpload.single("photo"), (req, res, next) => {
+
+    const { body, file } = req;
+    fileUpload.fileFilter(req, file, async function(err) {
+
+        if (err instanceof multer.MulterError) {
+            //multer error
+            res.status(500).json({
+                error: `multer uploading error: ${err.message}`
+            })
+            return;
+        } else if (err) {
+            //unknown error
+            if (err.name === 'ExtensionError') {
+                res.status(413).json({
+                    error: `${err.message}`
+                })
+            } else {
+                res.status(500).json({
+                    error: `unknown uploading error: ${err.message}`
+                })
+            }
+            return;
+        }
+
+        console.log("Create new user");
+        try {
+            const hashedPassword = await bcrypt.hash(body.password, 10)
+            const user = await createUser(body, file, hashedPassword)
+            console.log("hashedPW: ", hashedPassword)
+            console.log("user: ", user)
+            user ? res.status(200).json({ 
+                success: true, 
+                payload: user 
+            }) : res.status(404).send({
+                success: false,
+                payload: "/user not found" });
+        } catch(err) {
+            throw err
+        }
+    })
 });
 
 

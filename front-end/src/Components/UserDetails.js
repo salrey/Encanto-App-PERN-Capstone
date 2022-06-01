@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Avatar from '../Assets/avatar2.jpg'
 import { Typography, Stack } from "@mui/material";
 import Back from '../Assets/Back.png';
+import Button from '@mui/material/Button';
 
 
 
@@ -21,6 +21,7 @@ const UserDetails = () => {
     const [matchRequest, setMatchRequest] = useState([])
     const [ index, setIndex ] = useState(0);
     const API = process.env.REACT_APP_API_URL;
+
 
     useEffect(() => {
         const fetchRequestFromCurrentUser = async () => {
@@ -73,6 +74,8 @@ const UserDetails = () => {
                 axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
                 //then navigate to next user
                 nextUser(index, users)
+                //reset fetched matchRequest
+                setMatchRequest()
             } else {
                 //if there are no requests, then navigate to next user
                 nextUser(index, users)
@@ -81,12 +84,17 @@ const UserDetails = () => {
             if (matchRequest?.request_to === currentUser.id && matchRequest?.request_status === 0) {
                 axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
                 window.alert("Delighted to meet! Let's eat.")
-                //then navigate to chat, pass the props needed to use cometChat 
+                //reset fetched matchRequest
+                setMatchRequest()
             } else if (matchRequest?.request_from === currentUser.id) {
                 //navigate to next user
                 nextUser(index, users)
+                //reset fetched matchRequest
+                setMatchRequest()
             } else if (matchRequest?.request_status === 1) {
                 nextUser(index, users)
+                //reset fetched matchRequest
+                setMatchRequest()
             } else {
                 axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: users[index].id})
                 //then navigate to next user
@@ -95,72 +103,112 @@ const UserDetails = () => {
         }
     }
 
-    
 
-    const styles = {
-        customBorderRadius: {
-            borderRadius: 25
-        }
-    };
+    const userProfile = require(`${users[index].photo}`)
 
-
-
+    const displayCombo = matchRequest?.request_status === 1 && <div>
+        <Typography 
+        sx={{
+            mt: 2,
+            textAlign: "center",
+            fontFamily: "Signika Negative",
+            fontWeight:'bold',
+            fontSize: '16px',
+            color: 'yellow'
+            }}
+        >Great! You're already a combo. Continue?
+        </Typography>
+    </div>
 
     return (
-        <>
-        <Container>
-            
-            <Stack>
-                <Typography sx={{ mt: 2}}></Typography>
-                        <Link to={'/users'}>
-                            <img className="sign-up" src={Back} alt="back" style={{
-                                width: '55px',
-                                height: '35px',
-                                position: 'absolute',
-                                left:'1',
-                                top: '3'
-                                }}></img>
-                        </Link>
+        <Container sx={{ paddingLeft: 0, paddingRight: 0}}>  
+
+            <Stack sx={{ paddingTop: 2, paddingLeft: 2}}>
+                <Link to={'/users'}>
+                    <img className="sign-up" src={Back} alt="back" 
+                        style={{
+                        width: '55px',
+                        height: '35px',
+                        position: 'absolute',
+                        left:'1',
+                        top: '3'
+                        }}
+                    />
+                </Link>
             </Stack>
+
             <Box justifyContent="center"
                 alignItems="center"
-                sx={{display:"flex", width: '100%', mt: 15}}>
-                <Paper style={styles.customBorderRadius} sx={{ 
-                    backgroundImage: `url(${Avatar})`,
-                    backgroundSize: '365px 464px',
-                    width: '200%',
+                sx={{display:"flex", width: '100%', mt: 9, paddingBottom: 30}}>
+
+                <Paper sx={{ 
+                    backgroundImage: `url(${userProfile})`,
+                    backgroundColor: "inherit",
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center center',
+                    width: '100%',
                     height: '60.5vh',
-                    textAlign: "center"}}>
-            <div>  
-                <div><Typography
-                sx={{
-                    mt: 52,
                     textAlign: "center",
-                    fontFamily: "Signika Negative",
-                    fontWeight:'bold',
-                    fontSize: '25px',
-                    color: 'white'
-                    }}
-                >Name : {users[index].name}</Typography></div>
-                <div><Typography sx={{
-                    textAlign: "center",
-                    fontFamily: "Signika Negative",
-                    fontWeight:'bold',
-                    fontSize: '20px',
-                    color: 'white'
-                }}>Email : {users[index].email}</Typography></div>
-            
-            {matchRequest?.request_status === 1 && <div> Great! You're already a combo. Would you like to continue your match with {users[index].name}?</div>}
-            </div> 
-            <form onSubmit={handleSwipe}>
-                <button id="request_status" name="request_status" type="submit">No</button>
-                <button id="request_status" name="request_status" type="submit">Yes</button>
-            </form>
+                    backgroundRepeat: 'no-repeat',
+                    boxShadow: 'none',
+                    }}>
+                    <div>  
+                        <div>
+                            <Typography
+                                sx={{
+                                mt: 55,
+                                ml: 5,
+                                textAlign: "left",
+                                fontFamily: "Signika Negative",
+                                fontWeight:'bold',
+                                fontSize: '28px',
+                                color: 'white',
+                                bgcolor: 'gray'
+                                }}
+                                >{users[index].name},
+                            </Typography>
+                        </div>
+                        <div>
+                            <Typography 
+                                sx={{
+                                ml: 5,
+                                textAlign: "left",
+                                fontFamily: "Signika Negative",
+                                fontWeight:'bold',
+                                fontSize: '23px',
+                                color: 'white'
+                                }}
+                                >{users[index].email}
+                            </Typography>
+                        </div>
+                        {matchRequest?.request_status === 1 && displayCombo}                    
+                    </div> 
+                    <form onSubmit={handleSwipe}>
+                        <Button id="request_status" name="request_status" type="submit" 
+                            sx={{
+                            border: '3px solid red',
+                            borderRadius: '45%',
+                            mr: 11,
+                            mt: 2,
+                            color: 'white',
+                            fontWeight:'bold',
+                            }}
+                            >No
+                        </Button>
+                        <Button id="request_status" name="request_status" type="submit" 
+                            sx={{
+                            border: '3px solid green',
+                            borderRadius: '45%',
+                            mt: 2,
+                            color: 'white',
+                            fontWeight:'bold',
+                            }}
+                            >Yes
+                        </Button>
+                    </form>
                 </Paper>
             </Box>
-        </Container>    
-        </>
-        
+        </Container> 
     );
 }
 

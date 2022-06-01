@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
 
 //MUI
 import Toolbar from '@mui/material/Toolbar';
@@ -15,13 +14,6 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 export default function Footer () {
-  // const navigate = useNavigate();
-  
-  // Logging user out in progress
-  // const logOut = (event) => {
-  //   event.preventDefault();
-  //   // return navigate("/login")
-  // }
 
   return (
 

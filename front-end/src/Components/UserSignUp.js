@@ -23,12 +23,22 @@ const [user, setUser] = useState({
     email: "",
     food_pref: null,
     name: "",
+    photo: ""
 });
 
 const newUser = (addedUser) => {
+
     const fetchData = async () => {
+        const data = new FormData();
+        Object.entries(addedUser).forEach((pair) => data.append(pair[0], pair[1]))
+        // console.log("form data",...data)
         try {
-            const res = await axios.post(`${API}/users/register`, addedUser);
+            const res = await axios.post(`${API}/users/register`, data, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+            });
+            
             if(res.data.payload.constraint){
                 window.alert("That email address already exists")
             } else {
@@ -43,7 +53,11 @@ const newUser = (addedUser) => {
 };
 
 const handleTextChange = (event) => {
-setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
+    if (event.target.id === "photo") {
+        setUser({ ...user, [event.target.id]: event.target.files[0]});
+    } else {
+        setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
+    }
 };
 
 const handleSubmit = (event) => {
@@ -88,6 +102,16 @@ const handleSubmit = (event) => {
 
                     <Stack spacing={1} >
                         <form className="signup-form" onSubmit={handleSubmit}>
+                                <TextField
+                                    variant="standard"
+                                    className="photo"
+                                    label='photo'
+                                    id="photo"
+                                    name="photo"
+                                    onChange={handleTextChange}
+                                    type="file"
+                                    fullWidth required
+                                />
                                 <TextField
                                     variant="standard"
                                     className="name-input"
