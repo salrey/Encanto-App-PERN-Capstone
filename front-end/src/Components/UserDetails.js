@@ -13,6 +13,7 @@ import Back from '../Assets/Back.png';
 
 
 
+
 const UserDetails = () => {
     const location = useLocation();
     const { currentUser, users } = location.state;
@@ -81,7 +82,6 @@ const UserDetails = () => {
                 axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
                 window.alert("Delighted to meet! Let's eat.")
                 //then navigate to chat, pass the props needed to use cometChat 
-                navigate("/chat")
             } else if (matchRequest?.request_from === currentUser.id) {
                 //navigate to next user
                 nextUser(index, users)
@@ -95,7 +95,7 @@ const UserDetails = () => {
         }
     }
 
-
+    
 
     const styles = {
         customBorderRadius: {
