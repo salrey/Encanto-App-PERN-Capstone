@@ -84,6 +84,8 @@ const UserDetails = () => {
             if (matchRequest?.request_to === currentUser.id && matchRequest?.request_status === 0) {
                 axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
                 window.alert("Delighted to meet! Let's eat.")
+                // Update the page with the next user's info.
+                nextUser(index, users);
                 //reset fetched matchRequest
                 setMatchRequest()
             } else if (matchRequest?.request_from === currentUser.id) {
