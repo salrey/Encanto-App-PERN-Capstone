@@ -57,7 +57,7 @@ console.log("the current user: ", currentUser)
           path="*"
           element={<Redirect />}
          />
-      </Routes>
+        </Routes>
     </main>
   );
 }
