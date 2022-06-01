@@ -8,6 +8,8 @@ import Back from '../Assets/Back.png';
 import UpperBurger from "../Assets/upperHamburger.png"
 import Cheese from "../Assets/Cheese.png"
 import BottomHamburger from "../Assets/Bottom_Hamburger.png"
+import { AUTH_KEY } from "../Constants/Constants";
+import { CometChat} from '@cometchat-pro/chat';
 
 export default function UserLogIn ({setIsLoggedIn, setCurrentUser}) {
 
@@ -36,18 +38,48 @@ const handleSubmit = async (event) => {
     // before there was just input
     const fetchData = async () => {
         try {
-          console.log("Hitting logIn page");
-          const res = await axios.post(`${API}/login`,  {password:input.password, email:input.email, withCredentials: true});
-          console.log("how does res look like: ", res.data)
-          setCurrentUser(res.data.user);
-          setIsLoggedIn(true);
-          navigate('/users');
-          
-        } catch (err) {
-          return window.alert("Invalid password or email address")
+            console.log("Hitting logIn page");
+            const res = await axios.post(`${API}/login`,  {password:input.password, email:input.email, withCredentials: true});
+            console.log("how does res look like: ", res.data)
+            const userData = res.data.user
+            setCurrentUser(userData);
+            setIsLoggedIn(true);
+
+            
+    //Logs In to cometChat 
+        if(userData.uid){
+            const UID = userData.uid.toString()
+            console.log(typeof UID)
+            const user = new CometChat.User(UID)
+            user.setName(userData.name)
+            console.log(user)
+
+
+            await  CometChat.createUser(user, AUTH_KEY).then(
+                user => {
+                    console.log("user created", user);
+                }, error => {
+                    console.log("error", error);
+                }
+            )
+
+                            
+            await CometChat.login(UID, AUTH_KEY).then(
+                user => {
+                    console.log("Login Successful:", { user });   
+                }, error => {
+                    console.log("Login failed with exception:", { error });    
+                            }
+            );
         }
-      };
-      fetchData();
+
+            navigate('/users');
+        
+        } catch (err) {
+            return window.alert("Invalid password or email address")
+        }
+    };
+    fetchData();
 };
 
     return (

@@ -1,6 +1,31 @@
 // Import database
 const db = require("../db/dbConfig");
 
+// For Get all tables with status 1 
+
+const getAllMatch = async (current_user_id, request_status) => {
+
+    try{
+        const statusMatch = await db.any("SELECT * FROM match_requests WHERE request_to=$1 OR request_from=$1 AND request_status=$2", [current_user_id, request_status]);
+        return statusMatch;
+
+    }catch (error) {
+        console.log("Error from getAllMatch query");
+        return error;
+    }
+
+}
+
+const getOneUser = async (id) => {
+    try{
+        const oneUser = await db.one("SELECT * FROM users WHERE id=$1", id);
+
+        return oneUser
+    }catch (error) {
+        console.log("Error from getOneUser query");
+        return error;
+    }
+};
 
 // For POST
 const requestMatch = async (current_user_id, match_user_id) => {
@@ -42,7 +67,7 @@ const deleteMatch = async (match_id) => {
 const updateMatchStatus = async (match, match_id) => {
 
     const {request_from, request_to, request_status, date_created, date_accepted} = match;
-  try{
+    try{
     console.log("Hitting from updateMatchStatus query ");
     console.log("Match is: ", match);
     console.log("match_id is: ", match_id);
@@ -50,7 +75,7 @@ const updateMatchStatus = async (match, match_id) => {
     const updateMatchStatus = await db.one("UPDATE match_requests SET request_from=$1, request_to=$2, request_status=$3, date_created=$4, date_accepted=$5 WHERE id=$6 RETURNING *", [request_from, request_to, request_status, date_created, date_accepted, match_id]);
     return updateMatchStatus;
     
-  }catch(err) {
+  } catch(err) {
     console.log("Error from updateMatchStatus query ");
   }
 }
@@ -61,7 +86,8 @@ module.exports = {
    requestMatch,
    receiveMatch,
    deleteMatch,
-   updateMatchStatus
+   updateMatchStatus,
+   getAllMatch
 };
 
 
