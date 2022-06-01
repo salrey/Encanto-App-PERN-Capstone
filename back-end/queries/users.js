@@ -60,12 +60,15 @@ const updateUser = async (id, user) => {
 };
 
 // Create one user
-const createUser = async (user, hashedPassword) => {
+const createUser = async (user, file, hashedPassword) => {
     const {name, email, food_pref} = user
-    console.log("query: ", user)
-    console.log("query", hashedPassword)
+
+    const photo = `./uploads/${file.filename}`;
+
+    // console.log("query: ", user)
+    // console.log("query", hashedPassword)
     try {
-        const createdUser = await db.one("INSERT INTO users (name, email, food_pref, password) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, food_pref, hashedPassword]);
+        const createdUser = await db.one("INSERT INTO users (name, email, food_pref, photo, password) VALUES ($1, $2, $3, $4, $5) RETURNING *", [name, email, food_pref, photo, hashedPassword]);
         return createdUser;
     }catch (error) {
         console.log("Error from createUser query");
