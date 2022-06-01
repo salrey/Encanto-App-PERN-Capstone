@@ -4,9 +4,9 @@ import Footer from '../Components/Footer'
 
 const Show = () => {
   return (
-    <div>
-        <UserDetails />
-       <Footer/>
+    <div style={{backgroundColor:"#9E9753"}}>
+      <UserDetails />
+      <Footer/>
     </div>
   );
 }
