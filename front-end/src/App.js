@@ -9,7 +9,7 @@ import Show from "./Pages/Show";
 import Redirect from "./Pages/Redirect";
 import "./App.css"
 import Chat from "./Pages/Chat";
-
+import EachConversation from "./Components/EachConversation";
 
 const App = () => {
 const [currentUser, setCurrentUser] = useState();
@@ -47,13 +47,17 @@ console.log("the current user: ", currentUser)
          />
          <Route
           path="/chat"
-          element={<Chat/>}
+          element={<Chat currentUser={currentUser}/>}
+         />
+         <Route
+          path="/each-conversation/:theOtherPerson_id"
+          element={<EachConversation currentUser={currentUser}/>}
          />
          <Route
           path="*"
           element={<Redirect />}
          />
-      </Routes>
+        </Routes>
     </main>
   );
 }

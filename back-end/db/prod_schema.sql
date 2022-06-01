@@ -8,6 +8,7 @@ CREATE TABLE users (
     email TEXT UNIQUE NOT NULL,
     food_pref VARCHAR(50) DEFAULT NULL,
     password VARCHAR(255) NOT NULL,
+    uid SERIAL NOT NULL,
     photo VARCHAR(255) NOT NULL
 );
 
