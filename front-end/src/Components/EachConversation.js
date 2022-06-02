@@ -97,7 +97,7 @@ CometChat.addMessageListener(
             }
         };
         fetchData()
-    }, [theOtherPerson_id])
+    }, [theOtherPerson_id, sent, received])
 
 
 console.log("ConvoHistory: ", convoHistory)
@@ -110,20 +110,33 @@ console.log("ConvoHistory: ", convoHistory)
                     <img src={Avatar} alt="avatar" style={{height:"6vh", width:"6vh", borderRadius:"50px"}}/>
                 </Box>
             </AppBar>
-      </Box>
+        </Box>
         <Container maxWidth="xs" sx={{backgroundColor:"black", height:"844px"}}>
-            <Box sx={{position:"fixed", top:'auto', bottom: 70,}}>
-            <Box>  
-                <div style={{overflow:"scroll", color: "white"}} >
-                    {convoHistory.map((convo, i) => (<p key={i}>{convo.data.text}</p>))}
+            <Box sx={{overflow:"scroll", display:"flex", height:"600px"}}> 
+                <div style={{ color: "white"}} >
+                    {convoHistory.map((convo, i) => convo.receiverId == currentUser.id ? <Box 
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"35vh", mt:2, float:"left"}}><p style={{fontSize: "25px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box> : <Box
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#7FA7AD", height:"auto", width:"35vh",mt:2, float:"right"}}><p style={{fontSize: "25px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box>)}
                 </div>
-                <div className='sent'>{sent.map((send, i) => (<p style={{fontSize: "25px", color: "white", textAlign:"right",}}key={send + i}>
-                    You said: {send}</p>))}
+                {/* <div className='sent'>{sent.map((send, i) => 
+                <Box 
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
+                    <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
+                        {send}
+                    </p>
+                </Box>)}
                 </div>
-                <div className='received'>{received.map((rec, i) => (<p style={{fontSize: "25px", color: "white", textAlign:"left",}} key={rec + i}>
-                    Friend said: {rec}</p>))}
-                </div>
+                <div className='received'>{received.map((rec, i) => 
+                        <Box 
+                        key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
+                        <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
+                            {rec}
+                        </p>
+                    </Box>
+                )}
+                </div> */}
             </Box>
+            <Box sx={{position:"fixed", top:'auto', bottom: 70}}>
         <form onSubmit={handleSubmit}>
                 <input
                     label='Text'

@@ -11,9 +11,6 @@ import { Typography, Stack } from "@mui/material";
 import Back from '../Assets/Back.png';
 import Button from '@mui/material/Button';
 
-
-
-
 const UserDetails = () => {
     const location = useLocation();
     const { currentUser, users } = location.state;
@@ -21,7 +18,6 @@ const UserDetails = () => {
     const [matchRequest, setMatchRequest] = useState([])
     const [ index, setIndex ] = useState(0);
     const API = process.env.REACT_APP_API_URL;
-
 
     useEffect(() => {
         const fetchRequestFromCurrentUser = async () => {

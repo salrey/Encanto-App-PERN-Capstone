@@ -18,7 +18,7 @@ const Conversations = ({match, currentUser})  => {
       const fetchData = async () => {
           try {
               console.log("Hitting logIn page");
-              const res = await axios.get(`${API}/users/${match.request_from}`);
+              const res = await axios.get(`${API}/users/${match.request_from === currentUser.id ? match.request_to : match.request_from}`);
               console.log("how does res look like from Conversations: ", res.data)
               setUser(res.data.payload)
           }catch(error) {
