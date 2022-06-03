@@ -65,7 +65,7 @@ const UserDetails = () => {
             }
         }
 
-        if (submitted === "No") {
+        if (submitted === "NO") {
             if (matchRequest?.request_to === currentUser.id || matchRequest?.request_from === currentUser.id) {
                 axios.delete(`${API}/match-requests?id=${matchRequest.id}`)
                 //then navigate to next user

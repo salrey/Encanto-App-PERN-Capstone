@@ -25,7 +25,7 @@ import vegan from "../Food-assets/vegan.jpg";
 const FoodForm = ({ currentUser, setCurrentUser }) => {
     const API = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
-    const [ users, setUsers ] = useState();
+    const [ users, setUsers ] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
