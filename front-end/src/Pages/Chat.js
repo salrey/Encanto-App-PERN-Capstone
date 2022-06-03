@@ -35,7 +35,6 @@ import { Box, Container, Typography } from "@mui/material";
 console.log(currentUser)
 console.log(matches)
 
-
   return (
     <>
      <Box sx={{ flexGrow: 1 }}>

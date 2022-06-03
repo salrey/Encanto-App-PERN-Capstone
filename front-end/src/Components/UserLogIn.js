@@ -72,7 +72,6 @@ const handleSubmit = async (event) => {
                             }
             );
         }
-
             navigate('/users');
         
         } catch (err) {

@@ -113,31 +113,14 @@ console.log("ConvoHistory: ", convoHistory)
             </AppBar>
         </Box>
         <Container maxWidth="xs" sx={{backgroundColor:"black", height:"750px"}}>
-            <Box sx={{overflowY: "scroll", display:"flex", height:"630px"}}> 
+            <Box sx={{overflowY: "hidden", display:"flex", height:"630px"}}> 
             <ScrollToBottom>
                 <div style={{ color: "white"}} >
                     {convoHistory.map((convo, i) => convo.receiverId === currentUser.id.toString() ? <Box 
                     key={i} sx={{borderRadius:"20px", backgroundColor:"#414040", height:"auto", width:"30vh", mt:2, float:"left"}}><p style={{fontSize: "20px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box> : <Box
                     key={i} sx={{borderRadius:"20px", backgroundColor:"#4E86BA", height:"auto", width:"30vh",mt:2, float:"right"}}><p style={{fontSize: "20px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box>)}
                 </div>
-                {/* <div className='sent'>{sent.map((send, i) => 
-                <Box 
-                key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
-                <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
-                {send}
-                </p>
-                </Box>)}
-                </div>
-                <div className='received'>{received.map((rec, i) => 
-                    <Box 
-                    key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
-                    <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
-                    {rec}
-                    </p>
-                    </Box>
-                    )}
-                </div> */}
-                </ScrollToBottom>
+            </ScrollToBottom>
             </Box>
             <Box sx={{position:"fixed", top:'auto', bottom: 70}}>
         <form onSubmit={handleSubmit}>

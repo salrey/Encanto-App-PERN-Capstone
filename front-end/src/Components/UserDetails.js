@@ -149,13 +149,13 @@ const UserDetails = () => {
                     textAlign: "center",
                     backgroundRepeat: 'no-repeat',
                     boxShadow: 'none',
+                    mt:5
                     }}>
                     <div>  
                         <div>
                             <Typography
                                 sx={{
                                 mt: 55,
-                                ml: 5,
                                 textAlign: "left",
                                 fontFamily: "Signika Negative",
                                 fontWeight:'bold',
