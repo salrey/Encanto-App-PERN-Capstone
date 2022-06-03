@@ -10,8 +10,8 @@ import { Box, Container, Typography } from "@mui/material";
 
 
 // Import images from assets
-import logo from '../Assets/logo_encanto.png';
-import Avatar from '../Assets/avatar2.jpg';
+// import logo from '../Assets/logo_encanto.png';
+// import Avatar from '../Assets/avatar2.jpg';
 
 
   const Chat = ({ currentUser }) => {

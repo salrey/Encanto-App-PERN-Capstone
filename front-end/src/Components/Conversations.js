@@ -26,7 +26,7 @@ const Conversations = ({match, currentUser})  => {
           }
     };
     fetchData()
-  }, [API, match.request_from])
+  }, [API, currentUser.id ,match.request_from, match.request_to])
 
   console.log(user)
 

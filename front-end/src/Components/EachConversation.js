@@ -1,17 +1,18 @@
 import { CometChat } from '@cometchat-pro/chat';
 import React from 'react'
 import {useParams} from "react-router-dom";
-import {useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import Footer from "../Components/Footer";
 // import "../Styles/EachConversation.css"
 
 // Import MUI components
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container} from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 // import { TextField} from "@mui/material";
 // import IcecreamOutlinedIcon from '@mui/icons-material/IcecreamOutlined';
 import IcecreamIcon from '@mui/icons-material/Icecream';
 import IconButton from '@mui/material/IconButton';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 // Import images from assets
@@ -19,11 +20,11 @@ import Avatar from '../Assets/avatar2.jpg';
 
 const EachConversation = ({currentUser}) => {
 
-const { theOtherPerson_id } = useParams();
-const [text, setText] = useState("");
-const [sent, setSent] = useState([]);
-const [received, setReceived] = useState([]);
-const [convoHistory, setConvoHistory] = useState([]);
+    const { theOtherPerson_id } = useParams();
+    const [text, setText] = useState("");
+    const [sent, setSent] = useState([]);
+    const [received, setReceived] = useState([]);
+    const [convoHistory, setConvoHistory] = useState([]);
 
 console.log("are we getting the id from URL? :",  theOtherPerson_id)
 
@@ -73,6 +74,7 @@ CometChat.addMessageListener(
     console.log("conversation  : ", sent)
 
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -85,7 +87,6 @@ CometChat.addMessageListener(
                 messagesRequest.fetchPrevious().then(
                 messages => {
                     console.log("Message list fetched:", messages);
-
                     setConvoHistory(messages)
                 }, error => {
                     console.log("Message fetching failed with error:", error);
@@ -111,30 +112,32 @@ console.log("ConvoHistory: ", convoHistory)
                 </Box>
             </AppBar>
         </Box>
-        <Container maxWidth="xs" sx={{backgroundColor:"black", height:"844px"}}>
-            <Box sx={{overflow:"scroll", display:"flex", height:"600px"}}> 
+        <Container maxWidth="xs" sx={{backgroundColor:"black", height:"750px"}}>
+            <Box sx={{overflowY: "scroll", display:"flex", height:"630px"}}> 
+            <ScrollToBottom>
                 <div style={{ color: "white"}} >
-                    {convoHistory.map((convo, i) => convo.receiverId == currentUser.id ? <Box 
-                    key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"35vh", mt:2, float:"left"}}><p style={{fontSize: "25px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box> : <Box
-                    key={i} sx={{borderRadius:"20px", backgroundColor:"#7FA7AD", height:"auto", width:"35vh",mt:2, float:"right"}}><p style={{fontSize: "25px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box>)}
+                    {convoHistory.map((convo, i) => convo.receiverId === currentUser.id.toString() ? <Box 
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#414040", height:"auto", width:"30vh", mt:2, float:"left"}}><p style={{fontSize: "20px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box> : <Box
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#4E86BA", height:"auto", width:"30vh",mt:2, float:"right"}}><p style={{fontSize: "20px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box>)}
                 </div>
                 {/* <div className='sent'>{sent.map((send, i) => 
                 <Box 
-                    key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
-                    <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
-                        {send}
-                    </p>
+                key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
+                <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
+                {send}
+                </p>
                 </Box>)}
                 </div>
                 <div className='received'>{received.map((rec, i) => 
-                        <Box 
-                        key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
-                        <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
-                            {rec}
-                        </p>
+                    <Box 
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#6679DA", height:"auto", width:"25vh", mt:2, float:"left"}}>
+                    <p style={{fontSize: "25px", color: "white", textAlign:"left"}}>
+                    {rec}
+                    </p>
                     </Box>
-                )}
+                    )}
                 </div> */}
+                </ScrollToBottom>
             </Box>
             <Box sx={{position:"fixed", top:'auto', bottom: 70}}>
         <form onSubmit={handleSubmit}>
