@@ -14,12 +14,18 @@ const getEveryUser = async () => {
 
 // Select all users that chose the same cuisine
 const getAllUsers = async (food_pref) => {
-    try {
-        const allUsers = await db.any("SELECT * FROM users WHERE food_pref=$1", food_pref.toLowerCase());
-        return allUsers;
-    }catch (error) {
-        console.log("Error from getAllUsers query");
-        return error;
+    if (food_pref !== "null") {
+        try {
+            const allUsers = await db.any("SELECT * FROM users WHERE food_pref=$1", food_pref.toLowerCase());
+            console.log("get all users", allUsers)
+            console.log("food pref", food_pref)
+            return allUsers;
+        }catch (error) {
+            console.log("Error from getAllUsers query");
+            return error;
+        }
+    } else {
+        return [];
     }
 };
 
