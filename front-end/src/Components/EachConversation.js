@@ -159,11 +159,11 @@ console.log("ConvoHistory: ", convoHistory)
                         color:"white"
                     }}
                 />
-                <button type='submit' style={{backgroundColor:"transparent", border:"none"}}> 
-                <IconButton aria-label="chat-icon">
+                
+                <IconButton type='submit' sx={{backgroundColor:"transparent", border:"none"}} aria-label="chat-icon">
                 <IcecreamIcon fontSize="large" sx={{color:"white"}}/>
                 </IconButton>
-                </button>
+
             </form>
             </Box>
         </Container>
