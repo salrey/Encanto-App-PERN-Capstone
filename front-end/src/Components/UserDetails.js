@@ -119,8 +119,8 @@ const UserDetails = () => {
     </div>
 
     return (
-        <Container sx={{ paddingLeft: 0, paddingRight: 0}}>  
-
+        <Container sx={{ paddingLeft: 0, paddingRight: 0, backgroundImage: 'url("https://i.ibb.co/hs3dTS9/for-bg-1.png")', backgroundSize:"contain"}}>  
+        
             <Stack sx={{ paddingTop: 2, paddingLeft: 2}}>
                 <Link to={'/users'}>
                     <img className="sign-up" src={Back} alt="back" 
@@ -137,36 +137,31 @@ const UserDetails = () => {
 
             <Box justifyContent="center"
                 alignItems="center"
-                sx={{display:"flex", width: '100%', mt: 9, paddingBottom: 30}}>
-
+                sx={{display:"flex", width: '100%', mt: 5, paddingBottom: 30}}>
                 <Paper sx={{ 
                     backgroundImage: `url(${userProfile})`,
                     backgroundColor: "inherit",
                     backgroundSize: 'contain',
                     backgroundPosition: 'center center',
                     width: '100%',
-                    height: '60.5vh',
+                    height: '70vh',
                     textAlign: "center",
                     backgroundRepeat: 'no-repeat',
                     boxShadow: 'none',
                     mt:5
                     }}>
-                    <div>  
-                        <div>
+
+                  <Box sx={{backgroundColor:"rgb(0, 0, 0, 0.7)", width:"95%", ml:1.2, mt:55, height:"12vh"}}>
                             <Typography
                                 sx={{
-                                mt: 55,
                                 textAlign: "left",
                                 fontFamily: "Signika Negative",
                                 fontWeight:'bold',
                                 fontSize: '28px',
                                 color: 'white',
-                                bgcolor: 'gray'
                                 }}
                                 >{users[index].name},
                             </Typography>
-                        </div>
-                        <div>
                             <Typography 
                                 sx={{
                                 ml: 5,
@@ -178,9 +173,9 @@ const UserDetails = () => {
                                 }}
                                 >{users[index].email}
                             </Typography>
-                        </div>
+                            </Box>
                         {matchRequest?.request_status === 1 && displayCombo}                    
-                    </div> 
+                  
                     <form onSubmit={handleSwipe}>
                         <Button id="request_status" name="request_status" type="submit" 
                             sx={{
