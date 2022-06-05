@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+//Import MUI
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -14,7 +15,11 @@ import Fab from '@mui/material/Fab';
 import NoMeals from '../Assets/no-food.png';
 import Restaurant from '../Assets/yes-food.png';
 
+//Import dummy data
 import info from '../Info/model'
+
+//Import helper functions
+import RequestPopover from '../Utilities/Popover'
 
 const UserDetails = () => {
     const location = useLocation();
@@ -22,6 +27,8 @@ const UserDetails = () => {
     const navigate = useNavigate()
     const [matchRequest, setMatchRequest] = useState([])
     const [ index, setIndex ] = useState(0);
+    const [anchorEl, setAnchorEl] = useState(false);
+
     const API = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
@@ -40,7 +47,6 @@ const UserDetails = () => {
         fetchRequestToCurrentUser();
 
     }, [API, currentUser.id, users, index])
-
 
     const handleSwipe = (event) => {
         event.preventDefault();
@@ -65,7 +71,8 @@ const UserDetails = () => {
             if (i <= users.length -1) {
                     setIndex(i);
             } else {
-                window.alert("That's all for now! Try again later or choose another food preference.")
+                // window.alert("That's all for now! Try again later or choose another food preference.")
+                setAnchorEl(!anchorEl);
                 navigate("/users")
             }
         }
@@ -84,21 +91,25 @@ const UserDetails = () => {
         } else {
             if (matchRequest?.request_to === currentUser.id && matchRequest?.request_status === 0) {
                 axios.put(`${API}/match-requests`, {match: {...matchRequest, request_status: 1, date_accepted: insertDate()}, match_id: matchRequest.id})
-                window.alert("Delighted to meet! Let's eat.")
+                // window.alert("Delighted to meet! Let's eat.")
                 // Update the page with the next user's info.
+                setAnchorEl(!anchorEl);
                 nextUser(index, users);
                 //reset fetched matchRequest
                 setMatchRequest()
             } else if (matchRequest?.request_from === currentUser.id) {
+                setAnchorEl(!anchorEl);
                 //navigate to next user
                 nextUser(index, users)
                 //reset fetched matchRequest
                 setMatchRequest()
             } else if (matchRequest?.request_status === 1) {
+                setAnchorEl(!anchorEl);
                 nextUser(index, users)
                 //reset fetched matchRequest
                 setMatchRequest()
             } else {
+                setAnchorEl(!anchorEl);
                 axios.post(`${API}/match-requests`, {request_from: currentUser.id, request_to: users[index].id})
                 //then navigate to next user
                 nextUser(index, users)
@@ -106,6 +117,7 @@ const UserDetails = () => {
         }
     }
 
+    console.log(anchorEl)
 
     const userProfile = require(`${users[index].photo}`)
 
@@ -231,6 +243,7 @@ const UserDetails = () => {
                     </form>
                 </Paper>
             </Box>
+         {anchorEl ? <RequestPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl}/> : null}
         </Container> 
     );
 }
