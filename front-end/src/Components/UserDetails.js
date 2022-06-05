@@ -8,8 +8,13 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { Typography, Stack } from "@mui/material";
-import Back from '../Assets/Back.png';
+import Back from '../Assets/white-back.png';
 import Button from '@mui/material/Button';
+import Fab from '@mui/material/Fab';
+import NoMeals from '../Assets/no-food.png';
+import Restaurant from '../Assets/yes-food.png';
+
+import info from '../Info/model'
 
 const UserDetails = () => {
     const location = useLocation();
@@ -104,6 +109,8 @@ const UserDetails = () => {
 
     const userProfile = require(`${users[index].photo}`)
 
+    const find = info[users[index].email] !== undefined && info[users[index].email] 
+
     const displayCombo = matchRequest?.request_status === 1 && <div>
         <Typography 
         sx={{
@@ -112,15 +119,20 @@ const UserDetails = () => {
             fontFamily: "Signika Negative",
             fontWeight:'bold',
             fontSize: '16px',
-            color: 'yellow'
+            color: 'green'
             }}
         >Great! You're already a combo. Continue?
         </Typography>
     </div>
 
     return (
-        <Container sx={{ paddingLeft: 0, paddingRight: 0, backgroundImage: 'url("https://i.ibb.co/hs3dTS9/for-bg-1.png")', backgroundSize:"contain"}}>  
-        
+        <Container 
+        sx={{ 
+            paddingLeft: 0, 
+            paddingRight: 0, 
+            backgroundImage: 'url("https://i.ibb.co/hs3dTS9/for-bg-1.png")', 
+            backgroundSize:"contain"
+            }}>  
             <Stack sx={{ paddingTop: 2, paddingLeft: 2}}>
                 <Link to={'/users'}>
                     <img className="sign-up" src={Back} alt="back" 
@@ -129,12 +141,11 @@ const UserDetails = () => {
                         height: '35px',
                         position: 'absolute',
                         left:'1',
-                        top: '3'
+                        top: '3',
                         }}
                     />
                 </Link>
             </Stack>
-
             <Box justifyContent="center"
                 alignItems="center"
                 sx={{display:"flex", width: '100%', mt: 5, paddingBottom: 30}}>
@@ -150,8 +161,14 @@ const UserDetails = () => {
                     boxShadow: 'none',
                     mt:5
                     }}>
-
-                  <Box sx={{backgroundColor:"rgb(0, 0, 0, 0.7)", width:"95%", ml:1.2, mt:55, height:"12vh"}}>
+                  <Box 
+                     sx={{
+                      backgroundColor:"rgb(0, 0, 0, 0.7)", 
+                      width:"95%",
+                       ml:1.2, 
+                       mt:55, 
+                       height:"12vh"
+                       }}>
                             <Typography
                                 sx={{
                                 textAlign: "left",
@@ -160,44 +177,57 @@ const UserDetails = () => {
                                 fontSize: '28px',
                                 color: 'white',
                                 }}
-                                >{users[index].name},
+                                > {users[index].name[0].toUpperCase() + users[index].name.slice(1)} {find.age}
                             </Typography>
                             <Typography 
                                 sx={{
-                                ml: 5,
+                               
                                 textAlign: "left",
                                 fontFamily: "Signika Negative",
                                 fontWeight:'bold',
                                 fontSize: '23px',
                                 color: 'white'
                                 }}
-                                >{users[index].email}
+                                >
+                           Gender: {find.gender}
                             </Typography>
+                            <Typography 
+                                    sx={{
+                                    
+                                    textAlign: "left",
+                                    fontFamily: "Signika Negative",
+                                    fontWeight:'bold',
+                                    fontSize: '18px',
+                                    color: 'white'
+                                    }}
+                                    >Favorite food: <q>{(find.fav_food)}</q>
+                                </Typography>
                             </Box>
+        
+                
+            
                         {matchRequest?.request_status === 1 && displayCombo}                    
                   
                     <form onSubmit={handleSwipe}>
-                        <Button id="request_status" name="request_status" type="submit" 
-                            sx={{
-                            border: '3px solid red',
-                            borderRadius: '45%',
+                        <Fab id="request_status" name="request_status" type="submit" sx={{
                             mr: 11,
-                            mt: 2,
-                            color: 'white',
-                            fontWeight:'bold',
-                            }}
-                            >No
-                        </Button>
-                        <Button id="request_status" name="request_status" type="submit" 
-                            sx={{
-                            border: '3px solid green',
-                            borderRadius: '45%',
-                            mt: 2,
-                            color: 'white',
-                            fontWeight:'bold',
-                            }}
-                            >Yes
-                        </Button>
+                            mt: 5,
+                            background: `url(${NoMeals}) no-repeat center center`,
+                            backgroundSize: '30px'
+                            }}> 
+                            <div style={{opacity: 0}}>
+                                No
+                            </div>
+                        </Fab>
+                        <Fab id="request_status" name="request_status" type="submit" sx={{
+                            mt: 5,
+                            background: `url(${Restaurant}) no-repeat center center`,
+                            backgroundSize: '30px'
+                            }}> 
+                            <div style={{opacity: 0}}>
+                                Yes
+                            </div>
+                        </Fab>
                     </form>
                 </Paper>
             </Box>

@@ -10,9 +10,14 @@ import Avatar from '../Assets/avatar2.jpg';
 const Conversations = ({match, currentUser})  => {
 
     const [user, setUser] = useState([]);
+    const [isHovering, setIsHovering] = useState(false);
 
     const API = process.env.REACT_APP_API_URL;
-  
+
+    const handleMouseOver = () => {
+      setIsHovering(!isHovering);
+    }
+
     useEffect(() => {
   
       const fetchData = async () => {
@@ -30,9 +35,13 @@ const Conversations = ({match, currentUser})  => {
 
   console.log(user)
 
-    
+
   return (
-    <article>
+    <article
+    onMouseEnter={handleMouseOver}
+    onMouseLeave={handleMouseOver}
+    style={{backgroundColor: isHovering ? "#DBC6B4" : "#EDB27C"}}
+    >
         {/* <div>Conversations</div> */}
         {/* <p>{match.request_from === currentUser.id ? match.request_to : match.request_from}</p> */}
        <Link to={`/each-conversation/${match.request_from === currentUser.id ? match.request_to : user.id}`} style={{textDecoration:"none", display:"flex"}}> 
