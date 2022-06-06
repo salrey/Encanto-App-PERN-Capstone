@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { Typography, Stack } from "@mui/material";
 import Back from '../Assets/white-back.png';
-import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import NoMeals from '../Assets/no-food.png';
 import Restaurant from '../Assets/yes-food.png';
@@ -117,10 +116,7 @@ const UserDetails = () => {
         }
     }
 
-    console.log(anchorEl)
-
     const userProfile = require(`${users[index].photo}`)
-
     const find = info[users[index].email] !== undefined && info[users[index].email] 
 
     const displayCombo = matchRequest?.request_status === 1 && <div>
@@ -136,7 +132,7 @@ const UserDetails = () => {
         >Great! You're already a combo. Continue?
         </Typography>
     </div>
-
+    console.log(userProfile, "from UsedEtails")
     return (
         <Container 
         sx={{ 

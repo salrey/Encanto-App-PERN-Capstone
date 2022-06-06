@@ -17,6 +17,7 @@ import ScrollToBottom from 'react-scroll-to-bottom';
 
 // Import images from assets
 import Avatar from '../Assets/avatar2.jpg';
+import HamburgerImg from "../Assets/hamburger.jpg"
 
 const EachConversation = ({currentUser}) => {
 
@@ -108,7 +109,7 @@ console.log("ConvoHistory: ", convoHistory)
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{backgroundColor:"#9C7755", padding:2}}>
                 <Box sx={{display:"flex", justifyContent:"center"}}>
-                    <img src={Avatar} alt="avatar" style={{height:"6vh", width:"6vh", borderRadius:"50px"}}/>
+                    <img src={HamburgerImg} alt="hamburger-img" style={{height:"6vh", width:"6vh", borderRadius:"50px"}}/>
                 </Box>
             </AppBar>
         </Box>

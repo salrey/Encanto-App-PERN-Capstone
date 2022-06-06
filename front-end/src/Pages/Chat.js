@@ -36,8 +36,7 @@ import { Box, Container, Typography } from "@mui/material";
   };
   fetchData()
 }, [API,currentUser.id])
-console.log(currentUser)
-console.log(matches)
+
 
   return (
     <>
