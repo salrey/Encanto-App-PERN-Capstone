@@ -14,12 +14,18 @@ const getEveryUser = async () => {
 
 // Select all users that chose the same cuisine
 const getAllUsers = async (food_pref) => {
-    try {
-        const allUsers = await db.any("SELECT * FROM users WHERE food_pref=$1", food_pref.toLowerCase());
-        return allUsers;
-    }catch (error) {
-        console.log("Error from getAllUsers query");
-        return error;
+    if (food_pref !== "null") {
+        try {
+            const allUsers = await db.any("SELECT * FROM users WHERE food_pref=$1", food_pref.toLowerCase());
+            console.log("get all users", allUsers)
+            console.log("food pref", food_pref)
+            return allUsers;
+        }catch (error) {
+            console.log("Error from getAllUsers query");
+            return error;
+        }
+    } else {
+        return [];
     }
 };
 
@@ -60,12 +66,15 @@ const updateUser = async (id, user) => {
 };
 
 // Create one user
-const createUser = async (user, hashedPassword) => {
+const createUser = async (user, file, hashedPassword) => {
     const {name, email, food_pref} = user
-    console.log("query: ", user)
-    console.log("query", hashedPassword)
+
+    const photo = `./uploads/${file.filename}`;
+
+    // console.log("query: ", user)
+    // console.log("query", hashedPassword)
     try {
-        const createdUser = await db.one("INSERT INTO users (name, email, food_pref, password) VALUES ($1, $2, $3, $4) RETURNING *", [name, email, food_pref, hashedPassword]);
+        const createdUser = await db.one("INSERT INTO users (name, email, food_pref, photo, password) VALUES ($1, $2, $3, $4, $5) RETURNING *", [name, email, food_pref, photo, hashedPassword]);
         return createdUser;
     }catch (error) {
         console.log("Error from createUser query");

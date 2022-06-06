@@ -6,7 +6,8 @@ const {
     requestMatch,
     receiveMatch,
     deleteMatch,
-    updateMatchStatus
+    updateMatchStatus,
+    getAllMatch
 } = require('../queries/matches');
 
 match.post('/', async (req, res) => {
@@ -43,6 +44,24 @@ match.get('/', async (req, res) => {
     }
 });
 
+match.post('/get-match', async (req, res) => {
+    const {currentUser_id, request_status} = req.body;
+    const statusMatch = await getAllMatch(currentUser_id, request_status);
+    console.log("are we getting these?: ", currentUser_id, request_status)
+    console.log("from statusMatch controller")
+    if (statusMatch) {
+        res.json({
+            success:true,
+            payload: statusMatch
+        })
+    } else {
+        res.status(404).send({
+            success:false,
+            payload:"/page not found"
+        })
+    }
+
+})
 
 match.delete("/", async (req, res) => {
     console.log("DELETE a match from our matches table")
