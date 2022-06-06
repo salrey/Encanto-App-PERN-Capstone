@@ -127,7 +127,7 @@ const UserDetails = () => {
             fontFamily: "Signika Negative",
             fontWeight:'bold',
             fontSize: '16px',
-            color: 'green'
+            color: 'white'
             }}
         >Great! You're already a combo. Continue?
         </Typography>
@@ -135,6 +135,7 @@ const UserDetails = () => {
     console.log(userProfile, "from UsedEtails")
     return (
         <Container 
+        maxWidth="xs"
         sx={{ 
             paddingLeft: 0, 
             paddingRight: 0, 
@@ -163,7 +164,7 @@ const UserDetails = () => {
                     backgroundSize: 'contain',
                     backgroundPosition: 'center center',
                     width: '100%',
-                    height: '70vh',
+                    height: '75vh',
                     textAlign: "center",
                     backgroundRepeat: 'no-repeat',
                     boxShadow: 'none',
