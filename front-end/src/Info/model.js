@@ -43,7 +43,12 @@ const info = {
         age: 28,
         gender: 'Male',
         fav_food: "I love American"
-    }
+    },
+    'ross2@gmail.com': {
+        age: 32,
+        gender: 'Male',
+        fav_food: "I love American"
+    },
    
 };
 

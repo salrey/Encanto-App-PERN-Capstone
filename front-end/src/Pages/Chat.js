@@ -10,14 +10,18 @@ import { Box, Container, Typography } from "@mui/material";
 
 
 // Import images from assets
-import logo from '../Assets/logo_encanto.png';
-import Avatar from '../Assets/avatar2.jpg';
+// import logo from '../Assets/logo_encanto.png';
+// import Avatar from '../Assets/avatar2.jpg';
 
 
   const Chat = ({ currentUser }) => {
-  const API = process.env.REACT_APP_API_URL;
-  const [matches, setMatches] = useState([])
 
+  const [matches, setMatches] = useState([]);
+
+
+  const API = process.env.REACT_APP_API_URL;
+  
+  
   useEffect(() => {
 
     const fetchData = async () => {
@@ -32,8 +36,6 @@ import Avatar from '../Assets/avatar2.jpg';
   };
   fetchData()
 }, [API,currentUser.id])
-console.log(currentUser)
-console.log(matches)
 
 
   return (
@@ -44,11 +46,10 @@ console.log(matches)
                   sx={{
                     color:"white",
                     fontFamily: "Signika Negative",
-                    fontSize: "3vh",
+                    fontSize: "3.5vh",
                     letterSpacing: 1,
                     fontWeight: 900,
                     textAlign:"center",
-                    textShadow: "3px 0 yellow",
               
                   }}>
                     Matches
@@ -59,7 +60,9 @@ console.log(matches)
         <Box sx={{mt:4}}>
         {matches.map((match,i ) => {
           return (
-              <Box key={i} sx={{borderRadius:"20px", backgroundColor:"#EDB27C", height:"115px", mt:2}}>
+              <Box  
+              key={i} 
+              sx={{borderRadius:"20px", height:"115px", mt:2}}>
                 <Conversations match={match} currentUser={currentUser}/>
               </Box>
           )

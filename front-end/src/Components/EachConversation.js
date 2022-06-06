@@ -1,29 +1,31 @@
 import { CometChat } from '@cometchat-pro/chat';
 import React from 'react'
 import {useParams} from "react-router-dom";
-import {useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import Footer from "../Components/Footer";
 // import "../Styles/EachConversation.css"
 
 // Import MUI components
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container} from "@mui/material";
 import AppBar from '@mui/material/AppBar';
 // import { TextField} from "@mui/material";
 // import IcecreamOutlinedIcon from '@mui/icons-material/IcecreamOutlined';
 import IcecreamIcon from '@mui/icons-material/Icecream';
 import IconButton from '@mui/material/IconButton';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 
 // Import images from assets
 import Avatar from '../Assets/avatar2.jpg';
+import HamburgerImg from "../Assets/hamburger.jpg"
 
 const EachConversation = ({currentUser}) => {
 
-const { theOtherPerson_id } = useParams();
-const [text, setText] = useState("");
-const [sent, setSent] = useState([]);
-const [received, setReceived] = useState([]);
-const [convoHistory, setConvoHistory] = useState([]);
+    const { theOtherPerson_id } = useParams();
+    const [text, setText] = useState("");
+    const [sent, setSent] = useState([]);
+    const [received, setReceived] = useState([]);
+    const [convoHistory, setConvoHistory] = useState([]);
 
 console.log("are we getting the id from URL? :",  theOtherPerson_id)
 
@@ -73,6 +75,7 @@ CometChat.addMessageListener(
     console.log("conversation  : ", sent)
 
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -85,7 +88,6 @@ CometChat.addMessageListener(
                 messagesRequest.fetchPrevious().then(
                 messages => {
                     console.log("Message list fetched:", messages);
-
                     setConvoHistory(messages)
                 }, error => {
                     console.log("Message fetching failed with error:", error);
@@ -97,7 +99,7 @@ CometChat.addMessageListener(
             }
         };
         fetchData()
-    }, [theOtherPerson_id])
+    }, [theOtherPerson_id, sent, received])
 
 
 console.log("ConvoHistory: ", convoHistory)
@@ -107,23 +109,21 @@ console.log("ConvoHistory: ", convoHistory)
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{backgroundColor:"#9C7755", padding:2}}>
                 <Box sx={{display:"flex", justifyContent:"center"}}>
-                    <img src={Avatar} alt="avatar" style={{height:"6vh", width:"6vh", borderRadius:"50px"}}/>
+                    <img src={HamburgerImg} alt="hamburger-img" style={{height:"6vh", width:"6vh", borderRadius:"50px"}}/>
                 </Box>
             </AppBar>
-      </Box>
-        <Container maxWidth="xs" sx={{backgroundColor:"black", height:"844px"}}>
-            <Box sx={{position:"fixed", top:'auto', bottom: 70,}}>
-            <Box>  
-                <div style={{overflow:"scroll", color: "white"}} >
-                    {convoHistory.map((convo, i) => (<p key={i}>{convo.data.text}</p>))}
+        </Box>
+        <Container maxWidth="xs" sx={{backgroundColor:"black", height:"750px"}}>
+            <Box sx={{overflowY: "hidden", display:"flex", height:"630px"}}> 
+            <ScrollToBottom>
+                <div style={{ color: "white"}} >
+                    {convoHistory.map((convo, i) => convo.receiverId === currentUser.id.toString() ? <Box 
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#414040", height:"auto", width:"30vh", mt:2, float:"left"}}><p style={{fontSize: "20px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box> : <Box
+                    key={i} sx={{borderRadius:"20px", backgroundColor:"#4E86BA", height:"auto", width:"30vh",mt:2, float:"right"}}><p style={{fontSize: "20px", color: "white", textAlign:"center"}}>{convo.data.text}</p></Box>)}
                 </div>
-                <div className='sent'>{sent.map((send, i) => (<p style={{fontSize: "25px", color: "white", textAlign:"right",}}key={send + i}>
-                    You said: {send}</p>))}
-                </div>
-                <div className='received'>{received.map((rec, i) => (<p style={{fontSize: "25px", color: "white", textAlign:"left",}} key={rec + i}>
-                    Friend said: {rec}</p>))}
-                </div>
+            </ScrollToBottom>
             </Box>
+            <Box sx={{position:"fixed", top:'auto', bottom: 70}}>
         <form onSubmit={handleSubmit}>
                 <input
                     label='Text'
@@ -143,11 +143,11 @@ console.log("ConvoHistory: ", convoHistory)
                         color:"white"
                     }}
                 />
-                <button type='submit' style={{backgroundColor:"transparent", border:"none"}}> 
-                <IconButton aria-label="chat-icon">
+                
+                <IconButton type='submit' sx={{backgroundColor:"transparent", border:"none"}} aria-label="chat-icon">
                 <IcecreamIcon fontSize="large" sx={{color:"white"}}/>
                 </IconButton>
-                </button>
+
             </form>
             </Box>
         </Container>
