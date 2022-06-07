@@ -116,7 +116,6 @@ const UserDetails = () => {
         }
     }
 
-    const userProfile = require(`${users[index].photo}`)
     const find = info[users[index].email] !== undefined && info[users[index].email] 
 
     const displayCombo = matchRequest?.request_status === 1 && <div>
@@ -132,7 +131,8 @@ const UserDetails = () => {
         >Great! You're already a combo. Continue?
         </Typography>
     </div>
-    console.log(userProfile, "from UsedEtails")
+
+    
     return (
         <Container 
         maxWidth="xs"
@@ -159,7 +159,7 @@ const UserDetails = () => {
                 alignItems="center"
                 sx={{display:"flex", width: '100%', mt: 5, paddingBottom: 30}}>
                 <Paper sx={{ 
-                    backgroundImage: `url(${userProfile})`,
+                    backgroundImage: `url(${users[index].photo})`,
                     backgroundColor: "inherit",
                     backgroundSize: 'contain',
                     backgroundPosition: 'center center',

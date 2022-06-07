@@ -66,10 +66,8 @@ const updateUser = async (id, user) => {
 };
 
 // Create one user
-const createUser = async (user, file, hashedPassword) => {
-    const {name, email, food_pref} = user
-
-    const photo = `./uploads/${file.filename}`;
+const createUser = async (user, hashedPassword) => {
+    const {name, email, food_pref, photo} = user
 
     // console.log("query: ", user)
     // console.log("query", hashedPassword)
