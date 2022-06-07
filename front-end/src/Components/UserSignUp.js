@@ -27,17 +27,9 @@ const [user, setUser] = useState({
 });
 
 const newUser = (addedUser) => {
-
     const fetchData = async () => {
-        const data = new FormData();
-        Object.entries(addedUser).forEach((pair) => data.append(pair[0], pair[1]))
-        // console.log("form data",...data)
         try {
-            const res = await axios.post(`${API}/users/register`, data, {
-                headers: {
-                  'Content-Type': 'multipart/form-data',
-                },
-            });
+            const res = await axios.post(`${API}/users/register`, addedUser);
             
             if(res.data.payload.constraint){
                 window.alert("That email address already exists")
@@ -54,7 +46,7 @@ const newUser = (addedUser) => {
 
 const handleTextChange = (event) => {
     if (event.target.id === "photo") {
-        setUser({ ...user, [event.target.id]: event.target.files[0]});
+        setUser({ ...user, [event.target.id]: event.target.value});
     } else {
         setUser({ ...user, [event.target.id]: event.target.value.toLowerCase()});
     }
@@ -108,8 +100,9 @@ const handleSubmit = (event) => {
                                     label='photo'
                                     id="photo"
                                     name="photo"
+                                    value={user.photo}
                                     onChange={handleTextChange}
-                                    type="file"
+                                    type="text"
                                     fullWidth required
                                 />
                                 <TextField
