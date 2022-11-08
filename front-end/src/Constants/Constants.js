@@ -1,4 +1,4 @@
-export const APP_ID = "210998072ab8708d";
+export const APP_ID = "22494173a20919e2";
 export const APP_REGION = "us";
-export const AUTH_KEY = "4acb004deed97a01528e11d9d9bd702b6a6ed374";
-export const REST_API_KEY = "210998072ab8708d";
+export const AUTH_KEY = "128383c207a7b5c26bbbbe1daca6f851ec4ee7ea";
+export const REST_API_KEY = "22494173a20919e2";

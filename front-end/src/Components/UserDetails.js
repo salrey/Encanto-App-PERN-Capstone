@@ -139,8 +139,9 @@ const UserDetails = () => {
         sx={{ 
             paddingLeft: 0, 
             paddingRight: 0, 
-            backgroundImage: 'url("https://i.ibb.co/hs3dTS9/for-bg-1.png")', 
-            backgroundSize:"contain"
+            
+            backgroundImage: 'url("https://images.squarespace-cdn.com/content/v1/51e5a75be4b0d5c26ed1d294/1568324186106-NEKN1Q5HEHXEU9JUQC5D/bclowopacity.jpg?format=2500w")', 
+            backgroundSize:"80vh"
             }}>  
             <Stack sx={{ paddingTop: 2, paddingLeft: 2}}>
                 <Link to={'/users'}>
@@ -170,14 +171,14 @@ const UserDetails = () => {
                     boxShadow: 'none',
                     mt:5
                     }}>
-                  <Box 
-                     sx={{
-                      backgroundColor:"rgb(0, 0, 0, 0.7)", 
-                      width:"95%",
-                       ml:1.2, 
-                       mt:55, 
-                       height:"12vh"
-                       }}>
+                <Box 
+                    sx={{
+                    backgroundColor:"rgb(0, 0, 0, 0.7)", 
+                    width:"95%",
+                    ml:1.2, 
+                    mt:55, 
+                    height:"12vh"
+                    }}>
                             <Typography
                                 sx={{
                                 textAlign: "left",
@@ -190,7 +191,7 @@ const UserDetails = () => {
                             </Typography>
                             <Typography 
                                 sx={{
-                               
+                            
                                 textAlign: "left",
                                 fontFamily: "Signika Negative",
                                 fontWeight:'bold',
@@ -198,7 +199,7 @@ const UserDetails = () => {
                                 color: 'white'
                                 }}
                                 >
-                           Gender: {find.gender}
+                                Gender: {find.gender}
                             </Typography>
                             <Typography 
                                     sx={{
@@ -216,7 +217,7 @@ const UserDetails = () => {
                 
             
                         {matchRequest?.request_status === 1 && displayCombo}                    
-                  
+                
                     <form onSubmit={handleSwipe}>
                         <Fab id="request_status" name="request_status" type="submit" sx={{
                             mr: 11,
@@ -240,7 +241,7 @@ const UserDetails = () => {
                     </form>
                 </Paper>
             </Box>
-         {anchorEl ? <RequestPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl}/> : null}
+            {anchorEl ? <RequestPopover anchorEl={anchorEl} setAnchorEl={setAnchorEl}/> : null}
         </Container> 
     );
 }
